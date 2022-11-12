@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand text-uppercase" href="{% url 'home' %}">
+        Quantity Survey
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a
+              class="nav-link {% if request.path == '/' %} active {% endif %}"
+              aria-current="page"
+              href="{% url 'home' %}"
+            >
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'home' %}">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'home' %}">Partners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'home' %}">QnA</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle {% if '/about' in request.path %} active {% endif %}"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Support
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'home' %}">About</a></li>
+              <li><a class="dropdown-item" href="{% url 'home' %}">Contact</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" target='_blank' href="https://6hislain.pythonanywhere.com">Demo</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="https://github.com/6hislain/farm-equipment-distribution"
+                  target="_blank"
+                >
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="https://bio.link/6hislain"
+                  target="_blank"
+                >
+                  Author
+                </a>
+              </li>
+            </ul>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/dashboard' %} active {% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link {% if 'signin' in request.path %} active {% endif %}" href="{% url 'signin' %}">Log in</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'signup' in request.path %} active {% endif %}" href="{% url 'signup' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

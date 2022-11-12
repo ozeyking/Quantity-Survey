@@ -1,0 +1,118 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <h1 class="display-6 fw-bold my-4">Quantity survey</h1>
+    <p class="text-muted fs-5 my-2">
+    	We work hand in hand with farm equipment distributors to help you find after-sale services such as:
+    </p>
+    <ul class='text-muted fs-5 my-2 mx-3'>
+      <li>Maintainance and servicing</li>
+      <li>Finding spare parts</li>
+      <li>Leasing</li>
+      <li>Trainings, etc.</li>
+    </ul>
+  </div>
+  <div class='col-md-7'>
+    <img src="{% static 'images/harvesting.jpg' %}" class='w-100' alt='tractor'/>
+  </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Our quality products</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for product in products %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ product.image }}" class='card-img-top' alt='{{ product.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'>{{ product.name }}</h5>
+            <h6 class='card-text'>{{ product.price }}</h6>
+            <div>
+              {% for tag in product.json_partners %}
+              <span class="badge bg-info">{{ tag.value }}</span>
+              {% endfor %}
+              {% for tag in product.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div> 
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Our estimed partners</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for partner in partners %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ partner.image }}" class='card-img-top' alt='{{ partner.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'><a href='{% url "after-sale-service:partner.show" slug=partner.slug %}'>{{ partner.name }} &rarr;</a></h5>
+            <h6 class='card-text'>{{ partner.website }}</h6>
+            <div>
+              {% for tag in partner.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-12 my-3">
+    <h1 class="display-6 fw-bold my-4 text-center">Available services</h1>
+    <div class="owl-carousel owl-theme mb-3">
+      {% for service in services %}
+      <div class="item">
+        <div class="card shadow-sm">
+          <img src="/media/{{ service.image }}" class='card-img-top' alt='{{ service.name }}' />
+          <div class="card-body">
+            <h5 class='card-title'>
+              {% if service.link %}<a href='{{ service.link }}'>{% else %}
+              <a href='{% url "after-sale-service:service.show" slug=service.slug %}'>
+              {% endif %}{{ service.name }} &rarr;</a>
+            </h5>
+            <h6 class='card-text'>{{ service.website }}</h6>
+            <div>
+              {% for tag in service.json_partners %}
+              <span class="badge bg-info">{{ tag.value }}</span>
+              {% endfor %}
+              {% for tag in service.json_tags %}
+              <span class="badge bg-secondary">{{ tag.value }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.carousel.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/owl-carousel/assets/owl.theme.default.min.css' %}">
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/owl-carousel/owl.carousel.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    animateOut: "slideOutDown",
+    animateIn: "flipInX",
+    responsive: {
+      0: { items: 1 },
+      600: { items: 2 },
+      1000: { items: 4 },
+    },
+  });
+});
+</script>
+{% endblock %}
