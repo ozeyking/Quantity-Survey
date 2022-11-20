@@ -5,6 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
+from .models import Profile
 
 # Create your views here.
 @require_http_methods(["GET"])
