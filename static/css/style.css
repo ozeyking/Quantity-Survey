@@ -14,3 +14,9 @@ body {
   object-fit: cover;
   overflow-y: hidden;
 }
+
+.carousel-item > img {
+  max-height: 24rem;
+  object-fit: cover;
+  overflow-y: hidden;
+}

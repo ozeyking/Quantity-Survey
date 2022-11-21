@@ -14,7 +14,7 @@
   </head>
   <body>
     {% include 'partials/navbar.html' %}
-    <main class="container my-4">{% block content %}{% endblock %}</main>
+    <main class="container-fluid my-2">{% block content %}{% endblock %}</main>
     {% block scripts %}{% endblock %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   </body>
