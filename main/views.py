@@ -22,7 +22,16 @@ def profile(request, id):
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
-    return render(request, "dashboard.html")
+    return render(
+        request,
+        "dashboard.html",
+        {
+            "stock_quantity_count": 0,
+            "product_count": 0,
+            "employee_count": 0,
+            "payment_count": 0,
+        },
+    )
 
 
 @require_http_methods(["GET", "POST"])

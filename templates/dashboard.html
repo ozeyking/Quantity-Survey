@@ -1,0 +1,114 @@
+
+{% extends 'layouts/admin.html' %}
+{% load static %}
+{% block title %} Dashboard - Quantity Survey {% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ product_count  }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-cloud-rain me-1"></i> Products</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ stock_quantity_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Stock Quantity</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ employee_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-flower1 me-1"></i> Employees</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ payment_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bar-chart me-1"></i> Paid Wages</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <canvas id="production" width="400" height="400"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="profit" width="400" height="400"></canvas>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'vendor/chart_js/chart.min.js' %}"></script>
+<script>
+  const production = document.getElementById('production').getContext('2d');
+  const production_chart = new Chart(production, {
+      type: 'pie',
+      data: {
+          labels: ['Sponsor 1', 'Sponsor 2', 'Sponsor 3', 'Sponsor 4', 'Sponsor 5', 'Sponsor 6'],
+          datasets: [{
+              label: '# payments / donations',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+  
+  const profit = document.getElementById('profit').getContext('2d');
+  const profit_chart = new Chart(profit, {
+      type: 'line',
+      data: {
+          labels: ['Student 1', 'Student 2', 'Student 3', 'Student 4', 'Student 5', 'Student 6'],
+          datasets: [{
+              label: '# Consumption',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+  </script>
+{% endblock %}

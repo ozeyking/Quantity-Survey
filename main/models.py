@@ -32,6 +32,7 @@ class StockActivity(models.Model):
     price = models.FloatField()
     quantity = models.FloatField()
     description = models.TextField()
+    site_id = models.BigIntegerField(default=0)
     transaction_type = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
