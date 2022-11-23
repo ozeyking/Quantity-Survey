@@ -1,16 +1,16 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} School {% endblock %}
+{% block title %} Supplier {% endblock %}
 {% block content %}
-<h4>All School</h4>
+<h4>All Suppliers</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'school.index' %}">School</a></li>
-    <li class="breadcrumb-item active" aria-current="page">All School</li>
+    <li class="breadcrumb-item"><a href="{% url 'supplier:supplier.index' %}">Supplier</a></li>
+    <li class="breadcrumb-item active" aria-current="page">All Suppliers</li>
   </ol>
 </nav>
-<a href="{% url 'school.create' %}" class="btn btn-primary float-end">Add new school</a>
+<a href="{% url 'supplier:supplier.create' %}" class="btn btn-primary float-end">Add new supplier</a>
 {% include 'partials/messages.html' %}
 <table class="table">
   <thead>
@@ -24,18 +24,18 @@
     </tr>
   </thead>
   <tbody>
-    {% for school in page_object %}
+    {% for supplier in page_object %}
     <tr>
-      <td><img src='/media/{{school.image}}' width='50'/></td>
-      <td>{{school.name}}</td>
-      <td>{{school.address}}</td>
-      <td>{{school.details}}</td>
-      <td>{{school.created_at}}</td>
-      {% if school.user_id == user.id %}
+      <td><img src='/media/{{supplier.image}}' width='50'/></td>
+      <td>{{supplier.name}}</td>
+      <td>{{supplier.address}}</td>
+      <td>{{supplier.details}}</td>
+      <td>{{supplier.created_at}}</td>
+      {% if supplier.user_id == user.id %}
       <td>
         <a href='#' class='btn btn-success'>Details</a>
-        <a href="{% url 'school.edit' id=school.id %}" class="btn btn-info">Edit</a>
-        <a href="{% url 'school.delete' id=school.id %}" class="btn btn-warning">Delete</a>
+        <a href="{% url 'supplier.edit' id=supplier.id %}" class="btn btn-info">Edit</a>
+        <a href="{% url 'supplier.delete' id=supplier.id %}" class="btn btn-warning">Delete</a>
       </td>
       {% endif %}
     </tr>

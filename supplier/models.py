@@ -8,7 +8,7 @@ User = get_user_model()
 class Supplier(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
-    image = models.ImageField(upload_to="products", blank=True)
+    image = models.ImageField(upload_to="supplier", blank=True)
     owner_id = models.BigIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
@@ -20,7 +20,7 @@ class Supplier(models.Model):
 class SupplierProduct(models.Model):
     name = models.CharField(max_length=250)
     price = models.FloatField()
-    image = models.ImageField(upload_to="products", blank=True)
+    image = models.ImageField(upload_to="supplier/products", blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 

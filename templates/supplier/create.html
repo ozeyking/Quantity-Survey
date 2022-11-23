@@ -1,24 +1,26 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} School {% endblock %}
+{% block title %} Supplier {% endblock %}
 {% block content %}
-<h4>Add new school</h4>
+<h4>Add new supplier</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'school.index' %}">School</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new school</li>
+    <li class="breadcrumb-item"><a href="{% url 'supplier:supplier.index' %}">Supplier</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add new supplier</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
     <div class="col-md-4 mb-2">
-      <label for="name" class="form-label">School Name</label>
+      <label for="name" class="form-label">Supplier Name</label>
       <input type="text" class="form-control" name='name' placeholder="full name">
     </div>
     <div class="col-md-4 mb-2">
-      <label for="name" class="form-label">Address</label>
-      <input type="text" class="form-control" name="address" placeholder='province, district, street number' />
+      <label for="owner_id" class="form-label">Owner</label>
+      <select class='form-control' name='owner_id'>
+        <option value=''> - select owner - </option>
+      </select>
     </div>
     <div class="col-md-4 mb-2">
       <label for="image" class="form-label">Image</label>
@@ -26,13 +28,13 @@
     </div>
   </div>
   <div class="mb-2">
-    <label for="content" class="form-label">Details</label>
-    <textarea class='form-control' name='details' rows='5' placeholder="School additional information"></textarea>
+    <label for="content" class="form-label">Description</label>
+    <textarea class='form-control' name='description' rows='5' placeholder="Supplier additional information"></textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
     <button class="btn btn-primary" type="submit">Continue</button>
-    <a class="btn btn-link" href="{% url 'school.index' %}">All school</a>
+    <a class="btn btn-link" href="{% url 'supplier:supplier.index' %}">All suppliers</a>
   </div>
 </form>
 {% endblock %}
