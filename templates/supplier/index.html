@@ -17,8 +17,7 @@
     <tr>
       <th scope="col">Image</th>
       <th scope="col">Name</th>
-      <th scope="col">Address</th>
-      <th scope="col">Details</th>
+      <th scope="col">Description</th>
       <th scope="col">Time</th> 
       <th scope="col">Action</th>
     </tr>
@@ -28,14 +27,13 @@
     <tr>
       <td><img src='/media/{{supplier.image}}' width='50'/></td>
       <td>{{supplier.name}}</td>
-      <td>{{supplier.address}}</td>
-      <td>{{supplier.details}}</td>
+      <td>{{supplier.description}}</td>
       <td>{{supplier.created_at}}</td>
       {% if supplier.user_id == user.id %}
       <td>
         <a href='#' class='btn btn-success'>Details</a>
-        <a href="{% url 'supplier.edit' id=supplier.id %}" class="btn btn-info">Edit</a>
-        <a href="{% url 'supplier.delete' id=supplier.id %}" class="btn btn-warning">Delete</a>
+        <a href="{% url 'supplier:supplier.edit' id=supplier.id %}" class="btn btn-info">Edit</a>
+        <a href="{% url 'supplier:supplier.delete' id=supplier.id %}" class="btn btn-warning">Delete</a>
       </td>
       {% endif %}
     </tr>

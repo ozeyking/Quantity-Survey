@@ -21,7 +21,27 @@ def supplier_index(request):
 
 @login_required(login_url="signin")
 def supplier_create(request):
-    return render(request, "supplier/create.html")
+    if request.method == "GET":
+        owners = User.objects.filter(is_superuser=False)
+        print(owners)
+        return render(request, "supplier/create.html", {"owners": owners})
+    elif request.method == "POST":
+        name = request.POST["name"]
+        owner_id = request.POST["owner_id"]
+        description = request.POST["description"]
+        supplier = Supplier(
+            name=name,
+            owner_id=owner_id,
+            description=description,
+            user_id=request.user.id,
+        )
+
+        if request.FILES.get("image") != None:
+            supplier.image = request.FILES.get("image")
+
+        supplier.save()
+        messages.info(request, "supplier saved")
+        return redirect("supplier:supplier.index")
 
 
 @login_required(login_url="signin")

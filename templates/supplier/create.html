@@ -14,12 +14,15 @@
   <div class='row'>
     <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Supplier Name</label>
-      <input type="text" class="form-control" name='name' placeholder="full name">
+      <input type="text" class="form-control" name='name' placeholder="full name" required>
     </div>
     <div class="col-md-4 mb-2">
       <label for="owner_id" class="form-label">Owner</label>
-      <select class='form-control' name='owner_id'>
+      <select class='form-control' name='owner_id' required>
         <option value=''> - select owner - </option>
+        {% for owner in owners %}
+        <option value='{{ owner.id }}'>{{ owner.username }}</option>
+        {% endfor %}
       </select>
     </div>
     <div class="col-md-4 mb-2">
