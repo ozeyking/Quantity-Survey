@@ -6,26 +6,26 @@
 <div class="row">
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ product_count  }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-cloud-rain me-1"></i> Products</a>
+      <h1>{{ site_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-cloud-rain me-1"></i> Sites</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
-      <h1>{{ stock_quantity_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Stock Quantity</a>
+      <h1>{{ product_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-box me-1"></i> Products</a>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card card-body shadow-sm">
+      <h1>{{ supplier_count }}</h1>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-flower1 me-1"></i> Suppliers</a>
     </div>
   </div>
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
       <h1>{{ employee_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-flower1 me-1"></i> Employees</a>
-    </div>
-  </div>
-  <div class="col-md-3 col-sm-6 mb-3">
-    <div class="card card-body shadow-sm">
-      <h1>{{ payment_count }}</h1>
-      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bar-chart me-1"></i> Paid Wages</a>
+      <a href="{% url 'home' %}" class='btn btn-sm btn-outline-primary'><i class="bi bi-bar-chart me-1"></i> Employees</a>
     </div>
   </div>
   <div class="col-md-6">
@@ -43,7 +43,7 @@
   const production_chart = new Chart(production, {
       type: 'pie',
       data: {
-          labels: ['Sponsor 1', 'Sponsor 2', 'Sponsor 3', 'Sponsor 4', 'Sponsor 5', 'Sponsor 6'],
+          labels: ['Supplier 1', 'Supplier 2', 'Supplier 3', 'Supplier 4', 'Supplier 5', 'Supplier 6'],
           datasets: [{
               label: '# payments / donations',
               data: [12, 19, 3, 5, 2, 3],
@@ -82,7 +82,7 @@
           labels: ['Student 1', 'Student 2', 'Student 3', 'Student 4', 'Student 5', 'Student 6'],
           datasets: [{
               label: '# Consumption',
-              data: [12, 19, 3, 5, 2, 3],
+              data: [12, 3, 5, 19, 2, 3],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',

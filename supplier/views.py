@@ -40,7 +40,7 @@ def supplier_create(request):
             supplier.image = request.FILES.get("image")
 
         supplier.save()
-        messages.info(request, "supplier saved")
+        messages.info(request, "Supplier saved")
         return redirect("supplier:supplier.index")
 
 

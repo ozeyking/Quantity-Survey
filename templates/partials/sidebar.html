@@ -21,16 +21,16 @@
       <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
         <i class="bi bi-bell me-1"></i> Supervisor <span class="float-end">&rarr;</span>
       </a>
-      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/partner' in request.path %} active {% endif %}">
+      <a href="{% url 'product.index' %}" class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}">
         <i class="bi bi-people me-1"></i> Product <span class="float-end">&rarr;</span>
       </a>
-      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}">
+      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/site' in request.path %} active {% endif %}">
         <i class="bi bi-box me-1"></i> Site <span class="float-end">&rarr;</span>
       </a>
-      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/service' in request.path %} active {% endif %}">
+      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/stock-activity' in request.path %} active {% endif %}">
         <i class="bi bi-check2-circle me-1"></i> Stock Activity <span class="float-end">&rarr;</span>
       </a>
-      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/chat' in request.path %} active {% endif %}">
+      <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action {% if '/employee' in request.path %} active {% endif %}">
         <i class="bi bi-chat-dots me-1"></i> Employee <span class="float-end">&rarr;</span>
       </a>
       <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action">
