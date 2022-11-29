@@ -85,7 +85,7 @@ DATABASES = {
     },
     # "default": {
     #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "epic_farm_equipment",
+    #     "NAME": "qs",
     #     "USER": "root",
     #     "PASSWORD": "",
     #     "HOST": "127.0.0.1",
