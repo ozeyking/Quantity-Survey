@@ -7,6 +7,8 @@ from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Profile, StockActivity, Product
+from supervisor.models import Site, Employee
+from supplier.models import Supplier, SupplierProduct, SupplierStockActivity
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -23,14 +25,19 @@ def profile(request, id):
 @require_http_methods(["GET"])
 @login_required(login_url="signin")
 def dashboard(request):
+    site_count = Site.objects.count()
+    product_count = Product.objects.count()
+    supplier_count = Supplier.objects.count()
+    employee_count = Employee.objects.count()
+
     return render(
         request,
         "dashboard.html",
         {
-            "stock_quantity_count": 0,
-            "product_count": 0,
-            "employee_count": 0,
-            "payment_count": 0,
+            "supplier_count": supplier_count,
+            "product_count": product_count,
+            "employee_count": employee_count,
+            "site_count": site_count,
         },
     )
 
