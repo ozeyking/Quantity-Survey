@@ -119,8 +119,8 @@ def product_index(request):
 def product_create(request):
     if request.method == "GET":
         owners = User.objects.filter(is_superuser=False)
-        print(owners)
         return render(request, "product/create.html", {"owners": owners})
+
     elif request.method == "POST":
         name = request.POST["name"]
         price = request.POST["price"]

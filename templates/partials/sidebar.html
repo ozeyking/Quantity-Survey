@@ -20,7 +20,7 @@
       <i class="bi bi-shield-lock me-1"></i> Admin Area
       <span class="float-end">&rarr;</span>
     </a>
-    {% endif %} {% if user.groups.first.name == 'supplier' %}
+    {% endif %} {% if user.is_staff and user.groups.first.name != 'supplier' %}
     <a
       href="{% url 'supplier:supplier.index' %}"
       class="list-group-item list-group-item-action {% if '/supplier' in request.path %} active {% endif %}"
@@ -30,7 +30,22 @@
     </a>
     <a
       href="{% url 'product.index' %}"
-      class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
+      class="list-group-item list-group-item-action"
+    >
+      <i class="bi bi-people me-1"></i> Product
+      <span class="float-end">&rarr;</span>
+    </a>
+    {% endif %} {% if user.groups.first.name == 'supplier'%}
+    <a
+      href="{% url 'supplier:supplier.index' %}"
+      class="list-group-item list-group-item-action {% if '/supplier' in request.path %} active {% endif %}"
+    >
+      <i class="bi bi-activity me-1"></i> Supplier
+      <span class="float-end">&rarr;</span>
+    </a>
+    <a
+      href="{% url 'supplier:product.index' %}"
+      class="list-group-item list-group-item-action"
     >
       <i class="bi bi-people me-1"></i> Product
       <span class="float-end">&rarr;</span>
@@ -42,7 +57,7 @@
       <i class="bi bi-check2-circle me-1"></i> Stock Activity
       <span class="float-end">&rarr;</span>
     </a>
-    {% endif %} {% if user.groups.first.name == 'supervisor' %}
+    {% endif %} {% if user.groups.first.name == 'supervisor' or user.is_superuser %}
     <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-bell me-1"></i> Supervisor
       <span class="float-end">&rarr;</span>

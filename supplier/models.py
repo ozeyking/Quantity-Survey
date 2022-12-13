@@ -22,6 +22,7 @@ class SupplierProduct(models.Model):
     price = models.FloatField()
     image = models.ImageField(upload_to="supplier/products", blank=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    description = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
