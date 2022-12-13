@@ -9,3 +9,10 @@ python manage.py runserver
 - steelrwa
 - ruriba
 - tyford
+
+## TODO
+
+- [ ] activity
+- [ ] attendance
+- [ ] employee
+- [ ] site

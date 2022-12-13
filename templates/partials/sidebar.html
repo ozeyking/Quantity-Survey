@@ -21,31 +21,32 @@
       <span class="float-end">&rarr;</span>
     </a>
     {% endif %} {% if user.is_staff and user.groups.first.name != 'supplier' %}
-    <a
-      href="{% url 'supplier:supplier.index' %}"
-      class="list-group-item list-group-item-action {% if '/supplier' in request.path %} active {% endif %}"
-    >
+    <a href="{% url 'supplier:supplier.index' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-activity me-1"></i> Supplier
       <span class="float-end">&rarr;</span>
     </a>
     <a
       href="{% url 'product.index' %}"
-      class="list-group-item list-group-item-action"
+      class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
     >
       <i class="bi bi-people me-1"></i> Product
       <span class="float-end">&rarr;</span>
     </a>
-    {% endif %} {% if user.groups.first.name == 'supplier'%}
     <a
-      href="{% url 'supplier:supplier.index' %}"
-      class="list-group-item list-group-item-action {% if '/supplier' in request.path %} active {% endif %}"
+      href="{% url 'dashboard' %}"
+      class="list-group-item list-group-item-action {% if '/stock-activity' in request.path %} active {% endif %}"
     >
+      <i class="bi bi-check2-circle me-1"></i> Stock Activity
+      <span class="float-end">&rarr;</span>
+    </a>
+    {% endif %} {% if user.groups.first.name == 'supplier'%}
+    <a href="{% url 'supplier:supplier.index' %}" class="list-group-item list-group-item-action">
       <i class="bi bi-activity me-1"></i> Supplier
       <span class="float-end">&rarr;</span>
     </a>
     <a
       href="{% url 'supplier:product.index' %}"
-      class="list-group-item list-group-item-action"
+      class="list-group-item list-group-item-action {% if '/product' in request.path %} active {% endif %}"
     >
       <i class="bi bi-people me-1"></i> Product
       <span class="float-end">&rarr;</span>
