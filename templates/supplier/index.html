@@ -11,9 +11,9 @@
   </ol>
 </nav>
 {% if user.is_superuser %}
-<a href="{% url 'supplier:supplier.create' %}" class="btn btn-primary float-end">Add new supplier</a>
+<a href="{% url 'supplier:supplier.create' %}" class="btn btn-primary float-end mb-2">Add new supplier</a>
 {% endif %} {% include 'partials/messages.html' %}
-<table class="table">
+<table class="table bg-white">
   <thead>
     <tr>
       <th scope="col">Image</th>

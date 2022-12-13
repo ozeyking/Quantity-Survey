@@ -11,11 +11,11 @@
   </ol>
 </nav>
 {% if user.groups.first.name == 'supplier' %}
-<a href="{% url 'supplier:product.create' %}" class="btn btn-primary float-end">Add new product</a>
+<a href="{% url 'supplier:product.create' %}" class="btn btn-primary float-end mb-2">Add new product</a>
 {% elif user.groups.first.name != 'supplier' and user.is_staff %}
-<a href="{% url 'product.create' %}" class="btn btn-primary float-end">Add new product</a>
+<a href="{% url 'product.create' %}" class="btn btn-primary float-end mb-2">Add new product</a>
 {% endif %} {% include 'partials/messages.html' %}
-<table class="table">
+<table class="table bg-white">
   <thead>
     <tr>
       <th scope="col">Image</th>

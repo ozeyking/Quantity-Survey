@@ -1,6 +1,8 @@
 html,
 body {
-  background: whitesmoke;
+  background-image: url('/static/images/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
 }
 
