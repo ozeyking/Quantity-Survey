@@ -19,6 +19,9 @@ class Site(models.Model):
         user = get_object_or_404(User, pk=self.supervisor_id)
         return f"{self.name} - {user.first_name} {user.last_name}"
 
+    def supervisor(self):
+        return get_object_or_404(User, pk=self.supervisor_id)
+
 
 class Employee(models.Model):
     employee_id = models.BigIntegerField()
