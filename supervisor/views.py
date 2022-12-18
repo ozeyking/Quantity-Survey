@@ -44,6 +44,13 @@ def site_create(request):
             user_id=request.user.id,
         )
 
+        if request.FILES.get("image") != None:
+            site.image = request.FILES.get("image")
+
+        site.save()
+        messages.info(request, "Site saved")
+        return redirect("supervisor:site.index")
+
 
 @login_required(login_url="signin")
 def site_edit(request, id):

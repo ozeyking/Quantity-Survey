@@ -1,38 +1,47 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Product {% endblock %}
+{% block title %} Site {% endblock %}
 {% block content %}
-<h4>Add new product</h4>
+<h4>Add new site</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'product.index' %}">Product</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new product</li>
+    <li class="breadcrumb-item"><a href="{% url 'supervisor:site.index' %}">Site</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add new site</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-4 mb-2">
-      <label for="name" class="form-label">Product Name</label>
+    <div class="col-md-6 mb-2">
+      <label for="name" class="form-label">Site Name</label>
       <input type="text" class="form-control" name='name' placeholder="full name" required>
     </div>
-    <div class="col-md-4 mb-2">
-      <label for="price" class="form-label">Price</label>
-      <input type="number" class="form-control" name='price' placeholder="Price in RWF" required>
+    <div class="col-md-6 mb-2">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" name='address' placeholder="location" required>
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="image" class="form-label">Image</label>
       <input type="file" class="form-control" name='image' accept='image/*' />
+    </div>
+    <div class='col-md-6 mb-2'>
+      <label for='supervisor' class='form-label'>Supervisor</label>
+      <select class='form-control' name='supervisor' required>
+        <option value=''> - select supervisor - </option>
+        {% for supervisor in users %}
+        <option value='{{ supervisor.id }}'>{{ supervisor.username }}</option>
+        {% endfor %}
+      </select>
     </div>
   </div>
   <div class="mb-2">
     <label for="content" class="form-label">Description</label>
-    <textarea class='form-control' name='description' rows='5' placeholder="Product additional information"></textarea>
+    <textarea class='form-control' name='description' rows='5' placeholder="Site additional information"></textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
     <button class="btn btn-primary" type="submit">Continue</button>
-    <a class="btn btn-link" href="{% url 'product.index' %}">All products</a>
+    <a class="btn btn-link" href="{% url 'supervisor:site.index' %}">All sites</a>
   </div>
 </form>
 {% endblock %}

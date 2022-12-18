@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 from . import views
 
-app_name = "site"
+app_name = "supervisor"
 urlpatterns = [
     path("site", views.site_index, name="site.index"),
     path("site/create", views.site_create, name="site.create"),
