@@ -60,3 +60,55 @@ def site_edit(request, id):
 @login_required(login_url="signin")
 def site_delete(request, id):
     pass
+
+
+# employee
+@login_required(login_url="signin")
+def employee_index(request):
+    pass
+
+
+@login_required(login_url="signin")
+def employee_create(request):
+    pass
+
+
+@login_required(login_url="signin")
+def employee_edit(request, id):
+    pass
+
+
+@login_required(login_url="signin")
+def employee_delete(request, id):
+    pass
+
+
+@login_required(login_url="signin")
+def employee_show(request, id):
+    pass
+
+
+# attendance
+@login_required(login_url="signin")
+def attendance_index(request):
+    pass
+
+
+@login_required(login_url="signin")
+def attendance_create(request):
+    pass
+
+
+@login_required(login_url="signin")
+def attendance_edit(request, id):
+    pass
+
+
+@login_required(login_url="signin")
+def attendance_delete(request, id):
+    pass
+
+
+@login_required(login_url="signin")
+def attendance_show(request, id):
+    pass
