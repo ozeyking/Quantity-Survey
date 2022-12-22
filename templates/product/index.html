@@ -6,7 +6,11 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    {% if user.groups.first.name == 'supplier'%}
+    <li class="breadcrumb-item"><a href="{% url 'supplier:product.index' %}">Product</a></li>
+    {% else %}
     <li class="breadcrumb-item"><a href="{% url 'product.index' %}">Product</a></li>
+    {% endif %}
     <li class="breadcrumb-item active" aria-current="page">All Products</li>
   </ol>
 </nav>
@@ -22,7 +26,7 @@
       <th scope="col">Name</th>
       <th scope="col">Price</th>
       <th scope="col">Description</th>
-      <th scope="col">Time</th> 
+      <th scope="col">Quality</th> 
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -33,12 +37,16 @@
       <td>{{product.name}}</td>
       <td>{{product.price}}</td>
       <td>{{product.description}}</td>
-      <td>{{product.created_at}}</td>
+      <td>{{product.quality}}</td>
       <td>
-        {% if product.user_id == user.id %}
+        {% if user.groups.first.name != 'supplier' and product.user_id == user.id %}
           <a href='#' class='btn btn-success'>Details</a>
           <a href="{% url 'product.edit' id=product.id %}" class="btn btn-info">Edit</a>
           <a href="{% url 'product.delete' id=product.id %}" class="btn btn-warning">Delete</a>
+        {% endif %} {% if user.groups.first.name == 'supplier' and product.user_id == user.id %}
+          <a href='#' class='btn btn-success'>Details</a>
+          <a href="{% url 'supplier:product.edit' id=product.id %}" class="btn btn-info">Edit</a>
+          <a href="{% url 'supplier:product.delete' id=product.id %}" class="btn btn-warning">Delete</a>
         {% endif %}
       </td>
     </tr>

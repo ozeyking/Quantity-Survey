@@ -18,7 +18,8 @@ class Profile(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=250)
-    price = models.FloatField()
+    quality = models.CharField(max_length=250, blank=True)
+    price = models.FloatField(default=0)
     image = models.ImageField(upload_to="products", blank=True)
     description = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

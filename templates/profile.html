@@ -1,8 +1,8 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
-{% block title %} Profile - FEDA {% endblock %}
+{% block title %} Profile - Quantity Survey {% endblock %}
 {% block content %}
-<div class='container'>
+<div class='container py-4'>
 <h4>Profile</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -23,7 +23,7 @@
             {% else %}
             <img
                 class="img-fluid rounded-pill w-50 mx-auto"
-                src="/static/img/person.png"
+                src="/static/images/person.png"
                 alt="{{ user.username }}"
             />
             {% endif %}
@@ -33,9 +33,10 @@
   <div class='col-md-8'>
     {% include 'partials/messages.html' %}
     <div class='card card-body shadow-sm'>
-        <h5>Full names</h5>
-        <p>{{ user.first_name }} {{ user.last_name }}, {{ user.email }}</p>
-        <h5>Bio</h5>
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+        <h5>Email</h5>
+        <p>{{ user.email }}</p>
+        <h5>Short description</h5>
         <div>{{ profile.bio|safe }}</div>
     </div>
   </div>

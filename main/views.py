@@ -173,6 +173,7 @@ def product_create(request):
 
     elif request.method == "POST":
         name = request.POST["name"]
+        quality = request.POST["quality"]
         price = request.POST["price"]
         description = request.POST["description"]
         product = Product(
@@ -192,11 +193,32 @@ def product_create(request):
 
 @login_required(login_url="signin")
 def product_edit(request, id):
-    return render(request, "product/edit.html")
+    product = get_object_or_404(Product, pk=id)
+    if request.method == "GET":
+        owners = User.objects.filter(is_superuser=False)
+        return render(
+            request, "product/edit.html", {"owners": owners, "product": product}
+        )
+
+    elif request.method == "POST":
+        product.name = request.POST["name"]
+        product.quality = request.POST["quality"]
+        product.price = request.POST["price"]
+        product.description = request.POST["description"]
+
+        if request.FILES.get("image") != None:
+            product.image = request.FILES.get("image")
+
+        if request.user.id == product.user_id:
+            product.save()
+            messages.info(request, "Product saved")
+
+        return redirect("product.index")
 
 
 def product_delete(request, id):
-    return HttpResponse("delete product")
+    Product.objects.filter(pk=id).delete()
+    return redirect("product.index")
 
 
 def product_show(request, id):

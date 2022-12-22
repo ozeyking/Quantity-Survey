@@ -19,7 +19,8 @@ class Supplier(models.Model):
 
 class SupplierProduct(models.Model):
     name = models.CharField(max_length=250)
-    price = models.FloatField()
+    quality = models.CharField(max_length=250, blank=True)
+    price = models.FloatField(default=0)
     image = models.ImageField(upload_to="supplier/products", blank=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
