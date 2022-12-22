@@ -59,7 +59,8 @@ def site_edit(request, id):
 
 @login_required(login_url="signin")
 def site_delete(request, id):
-    pass
+    Site.objects.filter(pk=id).delete()
+    return redirect("supervisor:site.index")
 
 
 # employee
