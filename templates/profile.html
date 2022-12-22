@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'signin' %}">Account</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
     <li class="breadcrumb-item active" aria-current="page">Profile</li>
   </ol>
 </nav>
@@ -16,13 +16,13 @@
         <div class="card card-body text-center shadow-sm">
             {% if profile.image %}
             <img
-                class="img-fluid rounded-pill w-50 mx-auto"
+                class="img-fluid w-50 mx-auto"
                 src="/media/{{ profile.image }}"
                 alt="{{ user.username }}"
             />
             {% else %}
             <img
-                class="img-fluid rounded-pill w-50 mx-auto"
+                class="img-fluid w-50 mx-auto"
                 src="/static/images/person.png"
                 alt="{{ user.username }}"
             />

@@ -1,21 +1,21 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Product {% endblock %}
+{% block title %} Stock Activity {% endblock %}
 {% block content %}
-<h4>All Products</h4>
+<h4>All stock activities</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'product.index' %}">Product</a></li>
-    <li class="breadcrumb-item active" aria-current="page">All Products</li>
+    <li class="breadcrumb-item"><a href="{% url 'supplier:activity.index' %}">Stock activity</a></li>
+    <li class="breadcrumb-item active" aria-current="page">All stock activities</li>
   </ol>
 </nav>
 {% if user.groups.first.name == 'supplier' %}
-<a href="{% url 'supplier:product.create' %}" class="btn btn-primary float-end">Add new product</a>
+<a href="{% url 'supplier:activity.create' %}" class="btn btn-primary float-end mb-2">Add new activity</a>
 {% elif user.groups.first.name != 'supplier' and user.is_staff %}
-<a href="{% url 'product.create' %}" class="btn btn-primary float-end">Add new product</a>
+<a href="{% url 'product.create' %}" class="btn btn-primary float-end">Add new activity</a>
 {% endif %} {% include 'partials/messages.html' %}
-<table class="table">
+<table class="table bg-light">
   <thead>
     <tr>
       <th scope="col">Image</th>

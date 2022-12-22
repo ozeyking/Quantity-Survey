@@ -20,9 +20,9 @@
       <label for="owner_id" class="form-label">Owner</label>
       <select class='form-control' name='owner_id' required>
         <option value=''> - select owner - </option>
-        {% for owner in owners %}
+        {% for owner in owners %} {% if owner.groups.first.name == 'supplier' %}
         <option value='{{ owner.id }}'>{{ owner.username }}</option>
-        {% endfor %}
+        {% endif %} {% endfor %}
       </select>
     </div>
     <div class="col-md-4 mb-2">
