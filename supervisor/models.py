@@ -19,6 +19,9 @@ class Site(models.Model):
         user = get_object_or_404(User, pk=self.supervisor_id)
         return f"{self.name} - {user.first_name} {user.last_name}"
 
+    def supervisor(self):
+        return get_object_or_404(User, pk=self.supervisor_id)
+
 
 class Employee(models.Model):
     employee_id = models.BigIntegerField()
@@ -32,13 +35,12 @@ class Employee(models.Model):
         return f"{user.first_name} {user.last_name} - {self.position}"
 
 
-class Payment(models.Model):
+class Attendance(models.Model):
     employee_id = models.BigIntegerField()
-    amount = models.FloatField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         user = get_object_or_404(User, pk=self.employee_id)
-        return f"{user.first_name} {user.last_name} - {self.amount}"
+        return f"{user.first_name} {user.last_name} - {self.created_at}"

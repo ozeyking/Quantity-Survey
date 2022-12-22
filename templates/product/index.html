@@ -10,9 +10,12 @@
     <li class="breadcrumb-item active" aria-current="page">All Products</li>
   </ol>
 </nav>
-<a href="{% url 'product.create' %}" class="btn btn-primary float-end">Add new product</a>
-{% include 'partials/messages.html' %}
-<table class="table">
+{% if user.groups.first.name == 'supplier' %}
+<a href="{% url 'supplier:product.create' %}" class="btn btn-primary float-end mb-2">Add new product</a>
+{% elif user.groups.first.name != 'supplier' and user.is_staff %}
+<a href="{% url 'product.create' %}" class="btn btn-primary float-end mb-2">Add new product</a>
+{% endif %} {% include 'partials/messages.html' %}
+<table class="table bg-white">
   <thead>
     <tr>
       <th scope="col">Image</th>
@@ -31,13 +34,13 @@
       <td>{{product.price}}</td>
       <td>{{product.description}}</td>
       <td>{{product.created_at}}</td>
-      {% if product.user_id == user.id %}
       <td>
-        <a href='#' class='btn btn-success'>Details</a>
-        <a href="{% url 'product.edit' id=product.id %}" class="btn btn-info">Edit</a>
-        <a href="{% url 'product.delete' id=product.id %}" class="btn btn-warning">Delete</a>
+        {% if product.user_id == user.id %}
+          <a href='#' class='btn btn-success'>Details</a>
+          <a href="{% url 'product.edit' id=product.id %}" class="btn btn-info">Edit</a>
+          <a href="{% url 'product.delete' id=product.id %}" class="btn btn-warning">Delete</a>
+        {% endif %}
       </td>
-      {% endif %}
     </tr>
     {% endfor %}
   </tbody>
