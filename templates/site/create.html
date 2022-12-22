@@ -28,9 +28,9 @@
       <label for='supervisor' class='form-label'>Supervisor</label>
       <select class='form-control' name='supervisor' required>
         <option value=''> - select supervisor - </option>
-        {% for supervisor in users %}
+        {% for supervisor in users %} {% if owner.groups.first.name == 'supervisor' %}
         <option value='{{ supervisor.id }}'>{{ supervisor.username }}</option>
-        {% endfor %}
+        {% endif %} {% endfor %}
       </select>
     </div>
   </div>
