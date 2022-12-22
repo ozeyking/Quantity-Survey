@@ -77,11 +77,13 @@ def dashboard(request):
     product_count = Product.objects.count()
     supplier_count = Supplier.objects.count()
     employee_count = Employee.objects.count()
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
     return render(
         request,
         "dashboard.html",
         {
+            "profile": profile,
             "supplier_count": supplier_count,
             "product_count": product_count,
             "employee_count": employee_count,
