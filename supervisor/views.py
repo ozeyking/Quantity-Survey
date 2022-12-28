@@ -104,7 +104,8 @@ def employee_edit(request, id):
 
 @login_required(login_url="signin")
 def employee_delete(request, id):
-    pass
+    Employee.objects.filter(pk=id).delete()
+    return redirect("supervisor:employee.index")
 
 
 @login_required(login_url="signin")
@@ -115,12 +116,35 @@ def employee_show(request, id):
 # attendance
 @login_required(login_url="signin")
 def attendance_index(request):
-    pass
+    attendances = Attendance.objects.order_by("-id")
+    paginator = Paginator(attendances, 10)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "attendance/index.html", {"page_object": page_object})
 
 
 @login_required(login_url="signin")
 def attendance_create(request):
-    pass
+    if request.method == "GET":
+        sites = Site.objects.all()
+        users = User.objects.filter(is_staff=False)
+        return render(
+            request, "attendance/create.html", {"sites": sites, "users": users}
+        )
+
+    elif request.method == "POST":
+        user_id = request.POST["user"]
+        site = request.POST["site"]
+        attendance = Attendance(
+            employee_id=user_id,
+            site_id=site,
+            user_id=request.user.id,
+        )
+
+        attendance.save()
+        messages.info(request, "New attendance")
+        return redirect("supervisor:attendance.index")
 
 
 @login_required(login_url="signin")
@@ -130,7 +154,8 @@ def attendance_edit(request, id):
 
 @login_required(login_url="signin")
 def attendance_delete(request, id):
-    pass
+    Attendance.objects.filter(pk=id).delete()
+    return redirect("supervisor:attendance.index")
 
 
 @login_required(login_url="signin")

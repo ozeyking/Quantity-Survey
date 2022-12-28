@@ -53,3 +53,6 @@ class Attendance(models.Model):
             return f"{user.first_name} {user.last_name} - {self.created_at}"
         else:
             return self.position
+
+    def employee(self):
+        return User.objects.filter(pk=self.employee_id).first()

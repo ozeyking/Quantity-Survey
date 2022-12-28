@@ -10,9 +10,9 @@
     <li class="breadcrumb-item active" aria-current="page">All Employees</li>
   </ol>
 </nav>
-<a href="{% url 'supervisor:employee.create' %}" class="btn btn-primary float-end">Add new employee</a>
+<a href="{% url 'supervisor:employee.create' %}" class="btn btn-primary float-end mb-2">Add new employee</a>
 {% include 'partials/messages.html' %}
-<table class="table">
+<table class="table bg-light">
   <thead>
     <tr>
       <th scope="col">Name</th>
