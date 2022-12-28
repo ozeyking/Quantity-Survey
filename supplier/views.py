@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Supplier, SupplierProduct, SupplierStockActivity
+from .models import Supplier, SupplierProduct
 
 # Create your views here.
 @login_required(login_url="signin")
@@ -130,41 +130,3 @@ def supplier_product_delete(request, id):
 
 def supplier_product_show(request, id):
     return HttpResponse("show product")
-
-
-@login_required(login_url="signin")
-def supplier_activity_index(request):
-    activities = SupplierStockActivity.objects.filter(user_id=request.user.id).order_by(
-        "-id"
-    )
-    paginator = Paginator(activities, 10)
-    page_number = request.GET.get("page")
-    page_object = paginator.get_page(page_number)
-
-    return render(request, "activity/index.html", {"page_object": page_object})
-
-
-@login_required(login_url="signin")
-def supplier_activity_create(request):
-    if request.method == "GET":
-        products = SupplierProduct.objects.filter(user_id=request.user.id).all()
-        return render(request, "activity/create.html", {"products": products})
-
-    elif request.method == "POST":
-
-        return redirect("supplier:activity.index")
-
-
-@login_required(login_url="signin")
-def supplier_activity_edit(request, id):
-    pass
-
-
-@login_required(login_url="signin")
-def supplier_activity_show(request, id):
-    pass
-
-
-@login_required(login_url="signin")
-def supplier_activity_delete(request, id):
-    pass

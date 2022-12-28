@@ -8,7 +8,7 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Profile, StockActivity, Product
 from supervisor.models import Site, Employee
-from supplier.models import Supplier, SupplierProduct, SupplierStockActivity
+from supplier.models import Supplier, SupplierProduct
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -173,7 +173,6 @@ def product_create(request):
 
     elif request.method == "POST":
         name = request.POST["name"]
-        quality = request.POST["quality"]
         price = request.POST["price"]
         description = request.POST["description"]
         product = Product(
@@ -223,3 +222,79 @@ def product_delete(request, id):
 
 def product_show(request, id):
     return HttpResponse("show product")
+
+
+@login_required(login_url="signin")
+def activity_index(request):
+    activities = StockActivity.objects.order_by("-id")
+    paginator = Paginator(activities, 10)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "activity/index.html", {"page_object": page_object})
+
+
+@login_required(login_url="signin")
+def activity_create(request):
+    if request.method == "GET":
+        sites = Site.objects.all()
+        products = Product.objects.all()
+
+        return render(
+            request, "activity/create.html", {"sites": sites, "products": products}
+        )
+
+    elif request.method == "POST":
+        site = request.POST["site"]
+        price = request.POST["price"]
+        product = request.POST["product"]
+        quantity = request.POST["quantity"]
+        description = request.POST["description"]
+        transaction_type = request.POST["transaction_type"]
+
+        activity = StockActivity(
+            price=price,
+            site_id=site,
+            quantity=quantity,
+            product_id=product,
+            description=description,
+            transaction_type=transaction_type,
+            user_id=request.user.id,
+        )
+
+        activity.save()
+        messages.info(request, "Stock activity saved")
+        return redirect("activity.index")
+
+
+@login_required(login_url="signin")
+def activity_edit(request, id):
+    activity = get_object_or_404(StockActivity, pk=id)
+    if request.method == "GET":
+        owners = User.objects.filter(is_superuser=False)
+        return render(
+            request, "activity/edit.html", {"owners": owners, "activity": activity}
+        )
+
+    elif request.method == "POST":
+        activity.price = request.POST["price"]
+        activity.site_id = request.POST["site"]
+        activity.quantity = request.POST["quantity"]
+        activity.product_id = request.POST["product"]
+        activity.description = request.POST["description"]
+        activity.transaction_type = request.POST["transaction_type"]
+
+        if request.user.id == activity.user_id:
+            activity.save()
+            messages.info(request, "Stock activity saved")
+
+        return redirect("activity.index")
+
+
+def activity_delete(request, id):
+    StockActivity.objects.filter(pk=id).delete()
+    return redirect("activity.index")
+
+
+def activity_show(request, id):
+    return HttpResponse("show activity")

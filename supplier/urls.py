@@ -16,13 +16,4 @@ urlpatterns = [
         "product/<int:id>/delete", views.supplier_product_delete, name="product.delete"
     ),
     path("product/<int:id>", views.supplier_product_show, name="product.show"),
-    path("activity", views.supplier_activity_index, name="activity.index"),
-    path("activity/create", views.supplier_activity_create, name="activity.create"),
-    path("activity/<int:id>/edit", views.supplier_activity_edit, name="activity.edit"),
-    path(
-        "activity/<int:id>/delete",
-        views.supplier_activity_delete,
-        name="activity.delete",
-    ),
-    path("activity/<int:id>", views.supplier_activity_show, name="activity.show"),
 ]

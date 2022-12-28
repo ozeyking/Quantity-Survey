@@ -66,12 +66,35 @@ def site_delete(request, id):
 # employee
 @login_required(login_url="signin")
 def employee_index(request):
-    pass
+    employees = Employee.objects.order_by("-id")
+    paginator = Paginator(employees, 10)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "employee/index.html", {"page_object": page_object})
 
 
 @login_required(login_url="signin")
 def employee_create(request):
-    pass
+    if request.method == "GET":
+        sites = Site.objects.all()
+        users = User.objects.filter(is_staff=False)
+        return render(request, "employee/create.html", {"sites": sites, "users": users})
+
+    elif request.method == "POST":
+        user_id = request.POST["user"]
+        site = request.POST["site"]
+        position = request.POST["position"]
+        employee = Employee(
+            employee_id=user_id,
+            position=position,
+            site_id=site,
+            user_id=request.user.id,
+        )
+
+        employee.save()
+        messages.info(request, "New employee")
+        return redirect("supervisor:employee.index")
 
 
 @login_required(login_url="signin")
