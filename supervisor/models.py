@@ -35,18 +35,10 @@ class Employee(models.Model):
 
 
 class Attendance(models.Model):
-    employee_id = models.BigIntegerField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        user = User.objects.filter(pk=self.employee_id).first()
-
-        if user.id:
-            return f"{user.first_name} {user.last_name} - {self.created_at}"
-        else:
-            return self.position
-
-    def employee(self):
-        return User.objects.filter(pk=self.employee_id).first()
+        return self.employee.names

@@ -47,12 +47,16 @@ def supplier_create(request):
 
 @login_required(login_url="signin")
 def supplier_edit(request, id):
-    return render(request, "supplier/edit.html")
+    supplier = get_object_or_404(Supplier, pk=id)
+
+    if request.method == "GET":
+        owners = User.objects.filter(is_superuser=False)
 
 
 @login_required(login_url="signin")
 def supplier_delete(request, id):
-    return HttpResponse("delete supplier")
+    Supplier.objects.filter(pk=id).delete()
+    return redirect("supplier:supplier.index")
 
 
 def supplier_show(request, id):
@@ -72,8 +76,7 @@ def supplier_product_index(request):
 @login_required(login_url="signin")
 def supplier_product_create(request):
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(request, "product/create.html", {"owners": owners})
+        return render(request, "product/create.html")
 
     elif request.method == "POST":
         supplier = Supplier.objects.filter(owner_id=request.user.id).get()
@@ -123,10 +126,7 @@ def supplier_product_create(request):
 def supplier_product_edit(request, id):
     product = get_object_or_404(SupplierProduct, pk=id)
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(
-            request, "product/edit.html", {"owners": owners, "product": product}
-        )
+        return render(request, "product/edit.html", {"product": product})
 
     elif request.method == "POST":
         product.name = request.POST["name"]

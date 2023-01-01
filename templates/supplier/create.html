@@ -17,9 +17,9 @@
       <input type="text" class="form-control" name='name' placeholder="full name" required>
     </div>
     <div class="col-md-4 mb-2">
-      <label for="owner_id" class="form-label">Owner</label>
+      <label for="owner_id" class="form-label">Respresentative</label>
       <select class='form-control' name='owner_id' required>
-        <option value=''> - select owner - </option>
+        <option value=''> - select representative - </option>
         {% for owner in owners %} {% if owner.groups.first.name == 'supplier' %}
         <option value='{{ owner.id }}'>{{ owner.username }}</option>
         {% endif %} {% endfor %}

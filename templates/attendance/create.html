@@ -13,11 +13,11 @@
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
     <div class="col-md-4 mb-2">
-      <label for="user" class="form-label">User</label>
-      <select class='form-control' name='user' required>
-        <option value=''> - select user - </option>
-        {% for user in users %}
-        <option value='{{ user.id }}'>{{ user.username }} / {{ user.email }}</option>
+      <label for="employee" class="form-label">Employee</label>
+      <select class='form-control' name='employee' required>
+        <option value=''> - select employee - </option>
+        {% for employee in employees %}
+        <option value='{{ employee.id }}'>{{ employee.names }}</option>
         {% endfor %}
       </select>
     </div>

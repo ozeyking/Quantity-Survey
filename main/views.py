@@ -169,8 +169,7 @@ def product_index(request):
 @login_required(login_url="signin")
 def product_create(request):
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(request, "product/create.html", {"owners": owners})
+        return render(request, "product/create.html")
 
     elif request.method == "POST":
         if request.FILES.get("excel") != None:
@@ -217,10 +216,7 @@ def product_create(request):
 def product_edit(request, id):
     product = get_object_or_404(Product, pk=id)
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(
-            request, "product/edit.html", {"owners": owners, "product": product}
-        )
+        return render(request, "product/edit.html", {"product": product})
 
     elif request.method == "POST":
         product.name = request.POST["name"]
@@ -269,20 +265,19 @@ def activity_create(request):
 
     elif request.method == "POST":
         site = request.POST["site"]
-        price = request.POST["price"]
         product = request.POST["product"]
         quantity = request.POST["quantity"]
         description = request.POST["description"]
         transaction_type = request.POST["transaction_type"]
 
         activity = StockActivity(
-            price=price,
             site_id=site,
             quantity=quantity,
             product_id=product,
             description=description,
             transaction_type=transaction_type,
             user_id=request.user.id,
+            price=Product.objects.filter(pk=product).first().price * float(quantity),
         )
 
         activity.save()
@@ -293,19 +288,32 @@ def activity_create(request):
 @login_required(login_url="signin")
 def activity_edit(request, id):
     activity = get_object_or_404(StockActivity, pk=id)
+
     if request.method == "GET":
+        sites = Site.objects.all()
+        products = Product.objects.all()
         owners = User.objects.filter(is_superuser=False)
+
         return render(
-            request, "activity/edit.html", {"owners": owners, "activity": activity}
+            request,
+            "activity/edit.html",
+            {
+                "owners": owners,
+                "activity": activity,
+                "sites": sites,
+                "products": products,
+            },
         )
 
     elif request.method == "POST":
-        activity.price = request.POST["price"]
         activity.site_id = request.POST["site"]
         activity.quantity = request.POST["quantity"]
         activity.product_id = request.POST["product"]
         activity.description = request.POST["description"]
         activity.transaction_type = request.POST["transaction_type"]
+        activity.price = Product.objects.filter(
+            pk=request.POST["product"]
+        ).first().price * float(request.POST["quantity"])
 
         if request.user.id == activity.user_id:
             activity.save()

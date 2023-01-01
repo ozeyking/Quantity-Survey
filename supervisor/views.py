@@ -102,7 +102,26 @@ def employee_create(request):
 
 @login_required(login_url="signin")
 def employee_edit(request, id):
-    pass
+    employee = get_object_or_404(Employee, pk=id)
+
+    if request.method == "GET":
+        sites = Site.objects.all()
+        return render(
+            request, "employee/edit.html", {"sites": sites, "employee": employee}
+        )
+
+    elif request.method == "POST":
+        employee.names = request.POST["name"]
+        employee.phone = request.POST["phone"]
+        employee.email = request.POST["email"]
+        employee.site_id = request.POST["site"]
+        employee.position = request.POST["position"]
+
+        if request.user.id == employee.user_id:
+            employee.save()
+            messages.info(request, "Employee updated")
+
+        return redirect("supervisor:employee.index")
 
 
 @login_required(login_url="signin")
@@ -131,9 +150,9 @@ def attendance_index(request):
 def attendance_create(request):
     if request.method == "GET":
         sites = Site.objects.all()
-        users = User.objects.filter(is_staff=False)
+        employees = Employee.objects.all()
         return render(
-            request, "attendance/create.html", {"sites": sites, "users": users}
+            request, "attendance/create.html", {"sites": sites, "employees": employees}
         )
 
     elif request.method == "POST":
