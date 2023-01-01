@@ -12,7 +12,7 @@
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="product" class="form-label">Product</label>
       <select class='form-control' name='product' required>
         <option value=''> - select product - </option>
@@ -21,15 +21,11 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="quantity" class="form-label">Quantity</label>
       <input type="number" class="form-control" name='quantity' placeholder="..." required>
     </div>
-    <div class="col-md-4 mb-2">
-      <label for="price" class="form-label">Total price</label>
-      <input type="number" class="form-control" name='price' placeholder="Price in RWF">
-    </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="site" class="form-label">Site</label>
       <select class='form-control' name='site' required>
         <option value=''> - select site - </option>
@@ -38,7 +34,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
       <label for="transaction_type" class="form-label">Transaction type</label>
       <select class='form-control' name='transaction_type' required>
         <option value=''> - select transaction type - </option>

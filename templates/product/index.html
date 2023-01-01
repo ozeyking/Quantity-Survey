@@ -33,7 +33,7 @@
   <tbody>
     {% for product in page_object %}
     <tr>
-      <td><img src='/media/{{product.image}}' width='50'/></td>
+      <td>{% if product.image %}<img src='/media/{{product.image}}' width='50'/>{% endif %}</td>
       <td>{{product.name}}</td>
       <td>{{product.price}}</td>
       <td>{{product.description}}</td>

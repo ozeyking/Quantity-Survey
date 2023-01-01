@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Supplier, SupplierProduct
+import pandas as pd
 
 # Create your views here.
 @login_required(login_url="signin")
@@ -76,24 +77,45 @@ def supplier_product_create(request):
 
     elif request.method == "POST":
         supplier = Supplier.objects.filter(owner_id=request.user.id).get()
-        name = request.POST["name"]
-        quality = request.POST["quality"]
-        price = request.POST["price"]
-        description = request.POST["description"]
-        product = SupplierProduct(
-            name=name,
-            price=price,
-            quality=quality,
-            description=description,
-            user_id=request.user.id,
-            supplier_id=supplier.id,
-        )
+        if request.FILES.get("excel") != None:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-        if request.FILES.get("image") != None:
-            product.image = request.FILES.get("image")
+            try:
+                for index, row in df.iterrows():
+                    product = SupplierProduct(
+                        name=row["name"],
+                        price=row["price"],
+                        quality=row["quality"],
+                        description=row["description"],
+                        user_id=request.user.id,
+                        supplier_id=supplier.id,
+                    )
+                    product.save()
+                messages.info(request, "Product saved")
+            except:
+                messages.info(
+                    request, "Some rows in the excel files contained invalid data"
+                )
+                pass
+        else:
+            name = request.POST["name"]
+            quality = request.POST["quality"]
+            price = request.POST["price"]
+            description = request.POST["description"]
+            product = SupplierProduct(
+                name=name,
+                price=price,
+                quality=quality,
+                description=description,
+                user_id=request.user.id,
+                supplier_id=supplier.id,
+            )
 
-        product.save()
-        messages.info(request, "Product saved")
+            if request.FILES.get("image") != None:
+                product.image = request.FILES.get("image")
+
+            product.save()
+            messages.info(request, "Product saved")
         return redirect("supplier:product.index")
 
 

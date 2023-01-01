@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import Profile, StockActivity, Product
 from supervisor.models import Site, Employee
 from supplier.models import Supplier, SupplierProduct
+import pandas as pd
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -172,21 +173,43 @@ def product_create(request):
         return render(request, "product/create.html", {"owners": owners})
 
     elif request.method == "POST":
-        name = request.POST["name"]
-        price = request.POST["price"]
-        description = request.POST["description"]
-        product = Product(
-            name=name,
-            price=price,
-            description=description,
-            user_id=request.user.id,
-        )
+        if request.FILES.get("excel") != None:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-        if request.FILES.get("image") != None:
-            product.image = request.FILES.get("image")
+            try:
+                for index, row in df.iterrows():
+                    product = Product(
+                        name=row["name"],
+                        price=row["price"],
+                        quality=row["quality"],
+                        description=row["description"],
+                        user_id=request.user.id,
+                    )
+                    product.save()
+                messages.info(request, "Product saved")
+            except:
+                messages.info(
+                    request, "Some rows in the excel files contained invalid data"
+                )
+                pass
+        else:
+            name = request.POST["name"]
+            quality = request.POST["quality"]
+            price = request.POST["price"]
+            description = request.POST["description"]
+            product = Product(
+                name=name,
+                price=price,
+                quality=quality,
+                description=description,
+                user_id=request.user.id,
+            )
 
-        product.save()
-        messages.info(request, "Product saved")
+            if request.FILES.get("image") != None:
+                product.image = request.FILES.get("image")
+
+            product.save()
+            messages.info(request, "Product saved")
         return redirect("product.index")
 
 
