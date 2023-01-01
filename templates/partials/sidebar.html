@@ -33,15 +33,19 @@
       <i class="bi bi-shield me-1"></i> User Access
       <span class="float-end">&rarr;</span>
     </a>
+    <a href="{% url 'home' %}" class="list-group-item list-group-item-action">
+      <i class="bi bi-activity me-1"></i> Analysis (product list)
+      <span class="float-end">&rarr;</span>
+    </a>
     <a href="{% url 'supplier:supplier.index' %}" class="list-group-item list-group-item-action">
-      <i class="bi bi-activity me-1"></i> Supplier
+      <i class="bi bi-truck me-1"></i> Supplier
       <span class="float-end">&rarr;</span>
     </a>
     <a
       href="{% url 'supervisor:site.index' %}"
       class="list-group-item list-group-item-action {% if '/site' in request.path %} active {% endif %}"
     >
-      <i class="bi bi-box me-1"></i> Site <span class="float-end">&rarr;</span>
+      <i class="bi bi-flag me-1"></i> Site <span class="float-end">&rarr;</span>
     </a>
     {% endif %} {% if user.is_staff and user.groups.first.name != 'supplier' %}
     <a
@@ -55,7 +59,7 @@
       href="{% url 'activity.index' %}"
       class="list-group-item list-group-item-action {% if '/activity' in request.path %} active {% endif %}"
     >
-      <i class="bi bi-activity me-1"></i> Stock Activity
+      <i class="bi bi-cart me-1"></i> Stock Activity
       <span class="float-end">&rarr;</span>
     </a>
     {% endif %} {% if user.groups.first.name == 'supplier' %}
@@ -66,7 +70,7 @@
       <i class="bi bi-box me-1"></i> Product
       <span class="float-end">&rarr;</span>
     </a>
-    {% endif %} {% if user.groups.first.name == 'supervisor' or user.is_superuser %}
+    {% endif %} {% if user.groups.first.name == 'supervisor' %}
     <a
       href="{% url 'supervisor:employee.index' %}"
       class="list-group-item list-group-item-action {% if '/employee' in request.path %} active {% endif %}"

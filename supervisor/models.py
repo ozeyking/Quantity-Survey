@@ -18,26 +18,20 @@ class Site(models.Model):
         return self.name
 
     def supervisor(self):
-        return User.objects.filter(pk=self.employee_id).first()
+        return User.objects.filter(pk=self.supervisor_id).first()
 
 
 class Employee(models.Model):
-    employee_id = models.BigIntegerField(default=0)
+    names = models.CharField(max_length=250)
+    email = models.CharField(max_length=250, blank=True)
+    phone = models.CharField(max_length=250, blank=True)
     position = models.CharField(max_length=250)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        user = User.objects.filter(pk=self.employee_id).first()
-
-        if user.id:
-            return f"{user.first_name} {user.last_name} - {self.position}"
-        else:
-            return self.position
-
-    def employee(self):
-        return User.objects.filter(pk=self.employee_id).first()
+        return self.names
 
 
 class Attendance(models.Model):

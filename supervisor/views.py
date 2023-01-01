@@ -78,15 +78,18 @@ def employee_index(request):
 def employee_create(request):
     if request.method == "GET":
         sites = Site.objects.all()
-        users = User.objects.filter(is_staff=False)
-        return render(request, "employee/create.html", {"sites": sites, "users": users})
+        return render(request, "employee/create.html", {"sites": sites})
 
     elif request.method == "POST":
-        user_id = request.POST["user"]
+        name = request.POST["name"]
+        phone = request.POST["phone"]
+        email = request.POST["email"]
         site = request.POST["site"]
         position = request.POST["position"]
         employee = Employee(
-            employee_id=user_id,
+            names=name,
+            phone=phone,
+            email=email,
             position=position,
             site_id=site,
             user_id=request.user.id,

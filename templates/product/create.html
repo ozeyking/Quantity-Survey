@@ -44,12 +44,11 @@
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
+    <div>
+      <button class="btn btn-outline-primary" type="submit">Upload products from excel</button>
+      <a class="btn btn-outline-primary" href='/static/products.xlsx'>Sample products in excel</a>
+    </div>
     <button class="btn btn-primary" type="submit">Continue</button>
-    {% if user.groups.first.name == 'supplier'%}
-    <a class="btn btn-link" href="{% url 'supplier:product.index' %}">All products</a>
-    {% else %}
-    <a class="btn btn-link" href="{% url 'product.index' %}">All products</a>
-    {% endif %}
   </div>
 </form>
 {% endblock %}

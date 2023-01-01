@@ -13,17 +13,20 @@
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
     <div class="col-md-4 mb-2">
-      <label for="user" class="form-label">User</label>
-      <select class='form-control' name='user' required>
-        <option value=''> - select user - </option>
-        {% for user in users %}
-        <option value='{{ user.id }}'>{{ user.username }} / {{ user.email }}</option>
-        {% endfor %}
-      </select>
+      <label for="name" class="form-label">Full names *</label>
+      <input type="text" class="form-control" name='name' placeholder="full name" required>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="phone" class="form-label">Phone number</label>
+      <input type="text" class="form-control" name='phone' placeholder="07839523035">
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" name='email' placeholder="my@email.com">
     </div>
     <div class="col-md-4 mb-2">
       <label for="position" class="form-label">Position</label>
-      <input type="text" class="form-control" name='position' placeholder="..." required>
+      <input type="text" class="form-control" name='position' placeholder="painter,plumber,builder" required>
     </div>
     <div class="col-md-4 mb-2">
       <label for="site" class="form-label">Site</label>

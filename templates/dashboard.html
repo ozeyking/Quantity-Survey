@@ -2,7 +2,7 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
 {% block title %} Dashboard - Quantity Survey {% endblock %}
-{% block content %}
+{% block content %} {% if user.groups.first.name != 'supplier' %}
 <div class="row">
   <div class="col-md-3 col-sm-6 mb-3">
     <div class="card card-body shadow-sm">
@@ -39,7 +39,9 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% else %} 
+<div class='alert bg-info'>Welcome come back <strong>{{ user.first_name }} {{ user.last_name }}, {{ user.email }}</strong></div>
+{% endif %} {% endblock %}
 {% block scripts %}
 <script src="{% static 'vendor/chart_js/chart.min.js' %}"></script>
 <script>
