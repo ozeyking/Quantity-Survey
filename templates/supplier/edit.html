@@ -19,7 +19,7 @@
     <div class="col-md-4 mb-2">
       <label for="owner_id" class="form-label">Respresentative</label>
       <select class='form-control' name='owner_id' required>
-        <option value='{{ owner.id }}'>{{ owner.username }}</option>
+        <option value='{{ supplier.owner_id }}'>{{ supplier.owner.username }}</option>
         {% for owner in owners %} {% if owner.groups.first.name == 'supplier' %}
         <option value='{{ owner.id }}'>{{ owner.username }}</option>
         {% endif %} {% endfor %}

@@ -51,6 +51,23 @@ def supplier_edit(request, id):
 
     if request.method == "GET":
         owners = User.objects.filter(is_superuser=False)
+        return render(
+            request, "supplier/edit.html", {"owners": owners, "supplier": supplier}
+        )
+
+    elif request.method == "POST":
+        supplier.name = request.POST["name"]
+        supplier.owner_id = request.POST["owner_id"]
+        supplier.description = request.POST["description"]
+
+        if request.FILES.get("image") != None:
+            supplier.image = request.FILES.get("image")
+
+        if request.user.id == supplier.user_id:
+            supplier.save()
+            messages.info(request, "Supplier saved")
+
+        return redirect("supplier:supplier.index")
 
 
 @login_required(login_url="signin")

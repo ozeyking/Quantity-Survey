@@ -16,6 +16,9 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+    def owner(self):
+        return User.objects.filter(pk=self.owner_id).first()
+
 
 class SupplierProduct(models.Model):
     name = models.CharField(max_length=250)
