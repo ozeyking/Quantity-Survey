@@ -54,7 +54,26 @@ def site_create(request):
 
 @login_required(login_url="signin")
 def site_edit(request, id):
-    pass
+    site = get_object_or_404(Site, pk=id)
+
+    if request.method == "GET":
+        users = User.objects.filter(is_superuser=False)
+        return render(request, "site/edit.html", {"users": users, "site": site})
+
+    elif request.method == "POST":
+        site.name = request.POST["name"]
+        site.address = request.POST["address"]
+        site.description = request.POST["description"]
+        site.supervisor_id = request.POST["supervisor"]
+
+        if request.FILES.get("image") != None:
+            site.image = request.FILES.get("image")
+
+        if request.user.id == site.user_id:
+            site.save()
+            messages.info(request, "Site updated")
+
+        return redirect("supervisor:site.index")
 
 
 @login_required(login_url="signin")
@@ -156,7 +175,7 @@ def attendance_create(request):
         )
 
     elif request.method == "POST":
-        user_id = request.POST["user"]
+        user_id = request.POST["employee"]
         site = request.POST["site"]
         attendance = Attendance(
             employee_id=user_id,
@@ -167,11 +186,6 @@ def attendance_create(request):
         attendance.save()
         messages.info(request, "New attendance")
         return redirect("supervisor:attendance.index")
-
-
-@login_required(login_url="signin")
-def attendance_edit(request, id):
-    pass
 
 
 @login_required(login_url="signin")

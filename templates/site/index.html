@@ -27,7 +27,7 @@
   <tbody>
     {% for site in page_object %}
     <tr>
-      <td><img src='/media/{{site.image}}' width='50'/></td>
+      <td>{% if site.image %}<img src='/media/{{site.image}}' width='50'/>{% endif %}</td>
       <td>{{site.name}}</td>
       <td>{{site.supervisor.username}}</td>
       <td>{{site.description|truncatechars:20}}</td>

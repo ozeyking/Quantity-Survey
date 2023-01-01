@@ -16,7 +16,6 @@ urlpatterns = [
     path("employee/<int:id>", views.employee_show, name="employee.show"),
     path("attendance", views.attendance_index, name="attendance.index"),
     path("attendance/create", views.attendance_create, name="attendance.create"),
-    path("attendance/<int:id>/edit", views.attendance_edit, name="attendance.edit"),
     path(
         "attendance/<int:id>/delete", views.attendance_delete, name="attendance.delete"
     ),

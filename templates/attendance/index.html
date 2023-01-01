@@ -24,13 +24,11 @@
   <tbody>
     {% for attendance in page_object %}
     <tr>
-      <td>{{attendance.employee.username}}</td>
+      <td>{{attendance.employee.names}}</td>
       <td>{{attendance.site.name}}</td>
       <td>{{attendance.created_at}}</td>
       <td>
         {% if attendance.user_id == user.id %}
-          <a href='#' class='btn btn-success'>Details</a>
-          <a href="{% url 'supervisor:attendance.edit' id=attendance.id %}" class="btn btn-info">Edit</a>
           <a href="{% url 'supervisor:attendance.delete' id=attendance.id %}" class="btn btn-warning">Delete</a>
         {% endif %}
       </td>
