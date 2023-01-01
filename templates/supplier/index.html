@@ -28,7 +28,7 @@
     <tr>
       <td><img src='/media/{{supplier.image}}' width='50'/></td>
       <td>{{supplier.name}}</td>
-      <td>{{supplier.description}}</td>
+      <td>{{supplier.description|truncatechars:20}}</td>
       <td>{{supplier.created_at}}</td>
       <td>
         {% if supplier.user_id == user.id %}

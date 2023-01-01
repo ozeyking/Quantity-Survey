@@ -30,7 +30,7 @@
       <td><img src='/media/{{site.image}}' width='50'/></td>
       <td>{{site.name}}</td>
       <td>{{site.supervisor.username}}</td>
-      <td>{{site.description}}</td>
+      <td>{{site.description|truncatechars:20}}</td>
       <td>{{site.created_at}}</td>
       <td>
         {% if site.user_id == user.id %}
