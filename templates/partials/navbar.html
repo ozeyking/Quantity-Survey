@@ -35,7 +35,7 @@
             <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Pricing</a>
           </li> {% endcomment %}
           <li class="nav-item">
-            <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'home' %}">Contact Us</a>
+            <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'contact' %}">Contact Us</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
