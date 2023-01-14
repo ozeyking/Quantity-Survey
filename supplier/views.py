@@ -92,8 +92,9 @@ def supplier_product_index(request):
 
 @login_required(login_url="signin")
 def supplier_product_create(request):
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
     if request.method == "GET":
-        return render(request, "product/create.html")
+        return render(request, "product/create.html", {"suppliers": suppliers})
 
     elif request.method == "POST":
         supplier = Supplier.objects.filter(owner_id=request.user.id).get()
@@ -121,6 +122,7 @@ def supplier_product_create(request):
             name = request.POST["name"]
             quality = request.POST["quality"]
             price = request.POST["price"]
+            supplier_id = request.POST["supplier"]
             description = request.POST["description"]
             product = SupplierProduct(
                 name=name,
@@ -128,7 +130,7 @@ def supplier_product_create(request):
                 quality=quality,
                 description=description,
                 user_id=request.user.id,
-                supplier_id=supplier.id,
+                supplier_id=supplier_id,
             )
 
             if request.FILES.get("image") != None:
@@ -142,8 +144,11 @@ def supplier_product_create(request):
 @login_required(login_url="signin")
 def supplier_product_edit(request, id):
     product = get_object_or_404(SupplierProduct, pk=id)
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
     if request.method == "GET":
-        return render(request, "product/edit.html", {"product": product})
+        return render(
+            request, "product/edit.html", {"product": product, "suppliers": suppliers}
+        )
 
     elif request.method == "POST":
         product.name = request.POST["name"]
