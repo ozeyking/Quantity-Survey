@@ -20,6 +20,9 @@ class Site(models.Model):
     def supervisor(self):
         return User.objects.filter(pk=self.supervisor_id).first()
 
+    def employee_count(self):
+        return Employee.objects.filter(site_id=self.id).count()
+
 
 class Employee(models.Model):
     names = models.CharField(max_length=250)

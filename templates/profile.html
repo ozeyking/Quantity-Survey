@@ -3,15 +3,15 @@
 {% block title %} Profile - Quantity Survey {% endblock %}
 {% block content %}
 <div class='container py-4'>
-<h4>Profile</h4>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Profile</li>
-  </ol>
-</nav>
-<div class="row">
+  <h4>Profile</h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Profile</li>
+    </ol>
+  </nav>
+  <div class="row">
     <div class='col-md-4'>
         <div class="card card-body text-center shadow-sm">
             {% if profile.image %}
@@ -30,17 +30,53 @@
             <h5 class="text-truncate fw-bold my-1">{{ user.username }}</h5>
         </div>
     </div>
-  <div class='col-md-8'>
-    {% include 'partials/messages.html' %}
-    <div class='card card-body shadow-sm'>
-        <p>{{ user.first_name }} {{ user.last_name }}</p>
-        <h5>Email</h5>
-        <p>{{ user.email }}</p>
-        <h5>Short description</h5>
-        <div>{{ profile.bio|safe }}</div>
+    <div class='col-md-8'>
+      {% include 'partials/messages.html' %}
+      <div class='card card-body shadow-sm'>
+          <p>{{ user.first_name }} {{ user.last_name }}</p>
+          <h5>Email</h5>
+          <p>{{ user.email }}</p>
+          <h5>Short description</h5>
+          <div>{{ profile.bio|safe }}</div>
+      </div>
     </div>
+    {% if sites.count %}
+    <div class='col-12 text-center my-3'><hr/><h2>My Sites</h2></div>
+    {% for site in sites %}
+    <div class='col-md-3'>
+      <div class='card'>
+        <div class='card-header text-capitalize'>{{ site.name }}</div>
+        <div class='card-body'>
+          {% if site.image %}
+          <img src="/media/{{ site.image }}" class='card-img-top' alt='{{ site.name }}' />
+          {% elif site.image == '' %}
+          <img src="/static/images/placeholder.png" class='card-img-top' alt='{{ site.name }}' />
+          {% endif %}
+          {{ site.description|safe }}
+        </div>
+        <div class='card-footer'>{{ site.employee_count }} employees</div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}    
+    {% if suppliers.count %}
+    <div class='col-12 text-center my-3'><hr/><h2>Representing Suppliers</h2></div>
+    {% for supplier in suppliers %}
+    <div class='col-md-3'>
+      <div class='card'>
+        <div class='card-header text-capitalize'>{{ supplier.name }}</div>
+        <div class='card-body'>
+          {% if supplier.image %}
+          <img src="/media/{{ supplier.image }}" class='card-img-top' alt='{{ supplier.name }}' />
+          {% elif supplier.image == '' %}
+          <img src="/static/images/placeholder.png" class='card-img-top' alt='{{ supplier.name }}' />
+          {% endif %}
+          {{ supplier.description|safe }}
+        </div>
+        <div class='card-footer'>{{ supplier.product_count }} products</div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}
   </div>
-</div>
 </div>
 {% endblock %}
 {% block scripts %}

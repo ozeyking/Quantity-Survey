@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Site, Employee, Attendance
+import pandas as pd
 
 # Create your views here.
 @login_required(login_url="signin")
@@ -168,7 +169,7 @@ def attendance_index(request):
 @login_required(login_url="signin")
 def attendance_create(request):
     if request.method == "GET":
-        sites = Site.objects.all()
+        sites = Site.objects.filter(supervisor_id=request.user.id).all()
         employees = Employee.objects.all()
         return render(
             request, "attendance/create.html", {"sites": sites, "employees": employees}

@@ -19,6 +19,9 @@ class Supplier(models.Model):
     def owner(self):
         return User.objects.filter(pk=self.owner_id).first()
 
+    def product_count(self):
+        return SupplierProduct.objects.filter(supplier_id=self.id).count()
+
 
 class SupplierProduct(models.Model):
     name = models.CharField(max_length=250)

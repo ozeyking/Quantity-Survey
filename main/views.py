@@ -20,6 +20,8 @@ def home(request):
 @require_http_methods(["GET"])
 def profile(request, id):
     user = get_object_or_404(User, pk=id)
+    sites = Site.objects.filter(supervisor_id=request.user.id).all()
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
 
     if not Profile.objects.filter(profile_user_id=id).exists():
         profile = Profile.objects.create(user=user, profile_user_id=user.id)
@@ -27,7 +29,11 @@ def profile(request, id):
     else:
         profile = Profile.objects.filter(profile_user_id=id).get()
 
-    return render(request, "profile.html", {"profile": profile, "user": user})
+    return render(
+        request,
+        "profile.html",
+        {"profile": profile, "user": user, "sites": sites, "suppliers": suppliers},
+    )
 
 
 @login_required(login_url="signin")
