@@ -8,7 +8,7 @@ python manage.py runserver
 - tolirwa
 - steelrwa
 - ruriba
-- tyford
+- twyford
 
 ## TODO
 
