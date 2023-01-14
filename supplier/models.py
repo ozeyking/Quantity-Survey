@@ -16,6 +16,12 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+    def owner(self):
+        return User.objects.filter(pk=self.owner_id).first()
+
+    def product_count(self):
+        return SupplierProduct.objects.filter(supplier_id=self.id).count()
+
 
 class SupplierProduct(models.Model):
     name = models.CharField(max_length=250)
@@ -29,16 +35,3 @@ class SupplierProduct(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class SupplierStockActivity(models.Model):
-    product = models.ForeignKey(SupplierProduct, on_delete=models.CASCADE)
-    price = models.FloatField()
-    quantity = models.FloatField()
-    description = models.TextField()
-    transaction_type = models.CharField(max_length=250)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=datetime.now)
-
-    def __str__(self):
-        return f"{self.product.name} {self.quantity}"

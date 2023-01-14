@@ -33,10 +33,10 @@
   <tbody>
     {% for product in page_object %}
     <tr>
-      <td><img src='/media/{{product.image}}' width='50'/></td>
+      <td>{% if product.image %}<img src='/media/{{product.image}}' width='50'/>{% endif %}</td>
       <td>{{product.name}}</td>
       <td>{{product.price}}</td>
-      <td>{{product.description}}</td>
+      <td>{{product.description|truncatechars:20}}</td>
       <td>{{product.quality}}</td>
       <td>
         {% if user.groups.first.name != 'supplier' and product.user_id == user.id %}

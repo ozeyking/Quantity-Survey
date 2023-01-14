@@ -6,39 +6,36 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'supplier:activity.index' %}">Stock activity</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'activity.index' %}">Stock activity</a></li>
     <li class="breadcrumb-item active" aria-current="page">All stock activities</li>
   </ol>
 </nav>
-{% if user.groups.first.name == 'supplier' %}
-<a href="{% url 'supplier:activity.create' %}" class="btn btn-primary float-end mb-2">Add new activity</a>
-{% elif user.groups.first.name != 'supplier' and user.is_staff %}
-<a href="{% url 'product.create' %}" class="btn btn-primary float-end">Add new activity</a>
-{% endif %} {% include 'partials/messages.html' %}
+<a href="{% url 'activity.create' %}" class="btn btn-primary float-end mb-2">Add new activity</a>
+{% include 'partials/messages.html' %}
 <table class="table bg-light">
   <thead>
     <tr>
-      <th scope="col">Image</th>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Description</th>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Transaction</th>
+      <th scope="col">Site</th>
       <th scope="col">Time</th> 
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    {% for product in page_object %}
+    {% for activity in page_object %}
     <tr>
-      <td><img src='/media/{{product.image}}' width='50'/></td>
-      <td>{{product.name}}</td>
-      <td>{{product.price}}</td>
-      <td>{{product.description}}</td>
-      <td>{{product.created_at}}</td>
+      <td>{{activity.product.name}}</td>
+      <td>{{activity.quantity}}</td>
+      <td>{{activity.transaction_type}}</td>
+      <td>{{activity.site.name}}</td>
+      <td>{{activity.created_at}}</td>
       <td>
-        {% if product.user_id == user.id %}
+        {% if activity.user_id == user.id %}
           <a href='#' class='btn btn-success'>Details</a>
-          <a href="{% url 'product.edit' id=product.id %}" class="btn btn-info">Edit</a>
-          <a href="{% url 'product.delete' id=product.id %}" class="btn btn-warning">Delete</a>
+          <a href="{% url 'activity.edit' id=activity.id %}" class="btn btn-info">Edit</a>
+          <a href="{% url 'activity.delete' id=activity.id %}" class="btn btn-warning">Delete</a>
         {% endif %}
       </td>
     </tr>

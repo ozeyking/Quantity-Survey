@@ -6,7 +6,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .models import Supplier, SupplierProduct, SupplierStockActivity
+from .models import Supplier, SupplierProduct
+import pandas as pd
 
 # Create your views here.
 @login_required(login_url="signin")
@@ -46,12 +47,33 @@ def supplier_create(request):
 
 @login_required(login_url="signin")
 def supplier_edit(request, id):
-    return render(request, "supplier/edit.html")
+    supplier = get_object_or_404(Supplier, pk=id)
+
+    if request.method == "GET":
+        owners = User.objects.filter(is_superuser=False)
+        return render(
+            request, "supplier/edit.html", {"owners": owners, "supplier": supplier}
+        )
+
+    elif request.method == "POST":
+        supplier.name = request.POST["name"]
+        supplier.owner_id = request.POST["owner_id"]
+        supplier.description = request.POST["description"]
+
+        if request.FILES.get("image") != None:
+            supplier.image = request.FILES.get("image")
+
+        if request.user.id == supplier.user_id:
+            supplier.save()
+            messages.info(request, "Supplier saved")
+
+        return redirect("supplier:supplier.index")
 
 
 @login_required(login_url="signin")
 def supplier_delete(request, id):
-    return HttpResponse("delete supplier")
+    Supplier.objects.filter(pk=id).delete()
+    return redirect("supplier:supplier.index")
 
 
 def supplier_show(request, id):
@@ -70,40 +92,62 @@ def supplier_product_index(request):
 
 @login_required(login_url="signin")
 def supplier_product_create(request):
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(request, "product/create.html", {"owners": owners})
+        return render(request, "product/create.html", {"suppliers": suppliers})
 
     elif request.method == "POST":
         supplier = Supplier.objects.filter(owner_id=request.user.id).get()
-        name = request.POST["name"]
-        quality = request.POST["quality"]
-        price = request.POST["price"]
-        description = request.POST["description"]
-        product = SupplierProduct(
-            name=name,
-            price=price,
-            quality=quality,
-            description=description,
-            user_id=request.user.id,
-            supplier_id=supplier.id,
-        )
+        if request.FILES.get("excel") != None:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-        if request.FILES.get("image") != None:
-            product.image = request.FILES.get("image")
+            try:
+                for index, row in df.iterrows():
+                    product = SupplierProduct(
+                        name=row["name"],
+                        price=row["price"],
+                        quality=row["quality"],
+                        description=row["description"],
+                        user_id=request.user.id,
+                        supplier_id=supplier.id,
+                    )
+                    product.save()
+                messages.info(request, "Product saved")
+            except:
+                messages.info(
+                    request, "Some rows in the excel files contained invalid data"
+                )
+                pass
+        else:
+            name = request.POST["name"]
+            quality = request.POST["quality"]
+            price = request.POST["price"]
+            supplier_id = request.POST["supplier"]
+            description = request.POST["description"]
+            product = SupplierProduct(
+                name=name,
+                price=price,
+                quality=quality,
+                description=description,
+                user_id=request.user.id,
+                supplier_id=supplier_id,
+            )
 
-        product.save()
-        messages.info(request, "Product saved")
+            if request.FILES.get("image") != None:
+                product.image = request.FILES.get("image")
+
+            product.save()
+            messages.info(request, "Product saved")
         return redirect("supplier:product.index")
 
 
 @login_required(login_url="signin")
 def supplier_product_edit(request, id):
     product = get_object_or_404(SupplierProduct, pk=id)
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
         return render(
-            request, "product/edit.html", {"owners": owners, "product": product}
+            request, "product/edit.html", {"product": product, "suppliers": suppliers}
         )
 
     elif request.method == "POST":
@@ -130,41 +174,3 @@ def supplier_product_delete(request, id):
 
 def supplier_product_show(request, id):
     return HttpResponse("show product")
-
-
-@login_required(login_url="signin")
-def supplier_activity_index(request):
-    activities = SupplierStockActivity.objects.filter(user_id=request.user.id).order_by(
-        "-id"
-    )
-    paginator = Paginator(activities, 10)
-    page_number = request.GET.get("page")
-    page_object = paginator.get_page(page_number)
-
-    return render(request, "activity/index.html", {"page_object": page_object})
-
-
-@login_required(login_url="signin")
-def supplier_activity_create(request):
-    if request.method == "GET":
-        products = SupplierProduct.objects.filter(user_id=request.user.id).all()
-        return render(request, "activity/create.html", {"products": products})
-
-    elif request.method == "POST":
-
-        return redirect("supplier:activity.index")
-
-
-@login_required(login_url="signin")
-def supplier_activity_edit(request, id):
-    pass
-
-
-@login_required(login_url="signin")
-def supplier_activity_show(request, id):
-    pass
-
-
-@login_required(login_url="signin")
-def supplier_activity_delete(request, id):
-    pass

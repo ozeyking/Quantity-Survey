@@ -8,7 +8,8 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from .models import Profile, StockActivity, Product
 from supervisor.models import Site, Employee
-from supplier.models import Supplier, SupplierProduct, SupplierStockActivity
+from supplier.models import Supplier, SupplierProduct
+import pandas as pd
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -19,6 +20,8 @@ def home(request):
 @require_http_methods(["GET"])
 def profile(request, id):
     user = get_object_or_404(User, pk=id)
+    sites = Site.objects.filter(supervisor_id=request.user.id).all()
+    suppliers = Supplier.objects.filter(owner_id=request.user.id).all()
 
     if not Profile.objects.filter(profile_user_id=id).exists():
         profile = Profile.objects.create(user=user, profile_user_id=user.id)
@@ -26,7 +29,11 @@ def profile(request, id):
     else:
         profile = Profile.objects.filter(profile_user_id=id).get()
 
-    return render(request, "profile.html", {"profile": profile, "user": user})
+    return render(
+        request,
+        "profile.html",
+        {"profile": profile, "user": user, "sites": sites, "suppliers": suppliers},
+    )
 
 
 @login_required(login_url="signin")
@@ -168,26 +175,46 @@ def product_index(request):
 @login_required(login_url="signin")
 def product_create(request):
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(request, "product/create.html", {"owners": owners})
+        return render(request, "product/create.html")
 
     elif request.method == "POST":
-        name = request.POST["name"]
-        quality = request.POST["quality"]
-        price = request.POST["price"]
-        description = request.POST["description"]
-        product = Product(
-            name=name,
-            price=price,
-            description=description,
-            user_id=request.user.id,
-        )
+        if request.FILES.get("excel") != None:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-        if request.FILES.get("image") != None:
-            product.image = request.FILES.get("image")
+            try:
+                for index, row in df.iterrows():
+                    product = Product(
+                        name=row["name"],
+                        price=row["price"],
+                        quality=row["quality"],
+                        description=row["description"],
+                        user_id=request.user.id,
+                    )
+                    product.save()
+                messages.info(request, "Product saved")
+            except:
+                messages.info(
+                    request, "Some rows in the excel sheet contain invalid data"
+                )
+                pass
+        else:
+            name = request.POST["name"]
+            quality = request.POST["quality"]
+            price = request.POST["price"]
+            description = request.POST["description"]
+            product = Product(
+                name=name,
+                price=price,
+                quality=quality,
+                description=description,
+                user_id=request.user.id,
+            )
 
-        product.save()
-        messages.info(request, "Product saved")
+            if request.FILES.get("image") != None:
+                product.image = request.FILES.get("image")
+
+            product.save()
+            messages.info(request, "Product saved")
         return redirect("product.index")
 
 
@@ -195,10 +222,7 @@ def product_create(request):
 def product_edit(request, id):
     product = get_object_or_404(Product, pk=id)
     if request.method == "GET":
-        owners = User.objects.filter(is_superuser=False)
-        return render(
-            request, "product/edit.html", {"owners": owners, "product": product}
-        )
+        return render(request, "product/edit.html", {"product": product})
 
     elif request.method == "POST":
         product.name = request.POST["name"]
@@ -223,3 +247,91 @@ def product_delete(request, id):
 
 def product_show(request, id):
     return HttpResponse("show product")
+
+
+@login_required(login_url="signin")
+def activity_index(request):
+    activities = StockActivity.objects.order_by("-id")
+    paginator = Paginator(activities, 10)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "activity/index.html", {"page_object": page_object})
+
+
+@login_required(login_url="signin")
+def activity_create(request):
+    if request.method == "GET":
+        sites = Site.objects.all()
+        products = Product.objects.all()
+
+        return render(
+            request, "activity/create.html", {"sites": sites, "products": products}
+        )
+
+    elif request.method == "POST":
+        site = request.POST["site"]
+        product = request.POST["product"]
+        quantity = request.POST["quantity"]
+        description = request.POST["description"]
+        transaction_type = request.POST["transaction_type"]
+
+        activity = StockActivity(
+            site_id=site,
+            quantity=quantity,
+            product_id=product,
+            description=description,
+            transaction_type=transaction_type,
+            user_id=request.user.id,
+            price=Product.objects.filter(pk=product).first().price * float(quantity),
+        )
+
+        activity.save()
+        messages.info(request, "Stock activity saved")
+        return redirect("activity.index")
+
+
+@login_required(login_url="signin")
+def activity_edit(request, id):
+    activity = get_object_or_404(StockActivity, pk=id)
+
+    if request.method == "GET":
+        sites = Site.objects.all()
+        products = Product.objects.all()
+        owners = User.objects.filter(is_superuser=False)
+
+        return render(
+            request,
+            "activity/edit.html",
+            {
+                "owners": owners,
+                "activity": activity,
+                "sites": sites,
+                "products": products,
+            },
+        )
+
+    elif request.method == "POST":
+        activity.site_id = request.POST["site"]
+        activity.quantity = request.POST["quantity"]
+        activity.product_id = request.POST["product"]
+        activity.description = request.POST["description"]
+        activity.transaction_type = request.POST["transaction_type"]
+        activity.price = Product.objects.filter(
+            pk=request.POST["product"]
+        ).first().price * float(request.POST["quantity"])
+
+        if request.user.id == activity.user_id:
+            activity.save()
+            messages.info(request, "Stock activity saved")
+
+        return redirect("activity.index")
+
+
+def activity_delete(request, id):
+    StockActivity.objects.filter(pk=id).delete()
+    return redirect("activity.index")
+
+
+def activity_show(request, id):
+    return HttpResponse("show activity")

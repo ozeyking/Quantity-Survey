@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -16,31 +15,33 @@ class Site(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        user = get_object_or_404(User, pk=self.supervisor_id)
-        return f"{self.name} - {user.first_name} {user.last_name}"
+        return self.name
 
     def supervisor(self):
-        return get_object_or_404(User, pk=self.supervisor_id)
+        return User.objects.filter(pk=self.supervisor_id).first()
+
+    def employee_count(self):
+        return Employee.objects.filter(site_id=self.id).count()
 
 
 class Employee(models.Model):
-    employee_id = models.BigIntegerField()
+    names = models.CharField(max_length=250)
+    email = models.CharField(max_length=250, blank=True)
+    phone = models.CharField(max_length=250, blank=True)
     position = models.CharField(max_length=250)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        user = get_object_or_404(User, pk=self.employee_id)
-        return f"{user.first_name} {user.last_name} - {self.position}"
+        return self.names
 
 
 class Attendance(models.Model):
-    employee_id = models.BigIntegerField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        user = get_object_or_404(User, pk=self.employee_id)
-        return f"{user.first_name} {user.last_name} - {self.created_at}"
+        return self.employee.names

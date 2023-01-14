@@ -28,11 +28,22 @@
       <label for="quality" class="form-label">Quality</label>
       <select class='form-control' name='quality' required>
         <option value='{{ product.quality }}'>{{ product.quality }}</option>
-        <option value='quality 1'>quality 1</option>
-        <option value='quality 2'>quality 2</option>
-        <option value='quality 3'>quality 3</option>
+        <option value='1'>quality 1</option>
+        <option value='2'>quality 2</option>
+        <option value='3'>quality 3</option>
       </select>
     </div>
+    {% if suppliers.count %}
+    <div class="col-md-6 mb-2">
+      <label for="supplier" class="form-label">Supplier</label>
+      <select class='form-control' name='quality'>
+        <option value='{{ product.supplier_id }}'>{{ product.supplier.name }}</option>
+        {% for supplier in suppliers %}
+        <option value='{{ supplier.id }}'>{{ supplier.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
     <div class="col-md-6 mb-2">
       <label for="image" class="form-label">Image</label>
       <input type="file" class="form-control" name='image' accept='image/*' />

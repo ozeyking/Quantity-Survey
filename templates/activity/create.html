@@ -1,38 +1,56 @@
 {% extends 'layouts/admin.html' %}
 {% load static %}
-{% block title %} Product {% endblock %}
+{% block title %} Stock Activity {% endblock %}
 {% block content %}
-<h4>Add new product</h4>
+<h4>Add new activity</h4>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'product.index' %}">Product</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add new product</li>
+    <li class="breadcrumb-item"><a href="{% url 'activity.index' %}">Stock activity</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add new activity</li>
   </ol>
 </nav>
 <form action="#" method="post" enctype='multipart/form-data'>
   <div class='row'>
-    <div class="col-md-4 mb-2">
-      <label for="name" class="form-label">Product Name</label>
-      <input type="text" class="form-control" name='name' placeholder="full name" required>
+    <div class="col-md-6 mb-2">
+      <label for="product" class="form-label">Product</label>
+      <select class='form-control' name='product' required>
+        <option value=''> - select product - </option>
+        {% for product in products %}
+        <option value='{{ product.id }}'>{{ product.name }}</option>
+        {% endfor %}
+      </select>
     </div>
-    <div class="col-md-4 mb-2">
-      <label for="price" class="form-label">Price</label>
-      <input type="number" class="form-control" name='price' placeholder="Price in RWF" required>
+    <div class="col-md-6 mb-2">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="number" class="form-control" name='quantity' placeholder="..." required>
     </div>
-    <div class="col-md-4 mb-2">
-      <label for="image" class="form-label">Image</label>
-      <input type="file" class="form-control" name='image' accept='image/*' />
+    <div class="col-md-6 mb-2">
+      <label for="site" class="form-label">Site</label>
+      <select class='form-control' name='site' required>
+        <option value=''> - select site - </option>
+        {% for site in sites %}
+        <option value='{{ site.id }}'>{{ site.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6 mb-2">
+      <label for="transaction_type" class="form-label">Transaction type</label>
+      <select class='form-control' name='transaction_type' required>
+        <option value=''> - select transaction type - </option>
+        <option value='stock-in'>Stock In</option>
+        <option value='stock-out'>Stock Out</option>
+      </select>
     </div>
   </div>
   <div class="mb-2">
     <label for="content" class="form-label">Description</label>
-    <textarea class='form-control' name='description' rows='5' placeholder="Product additional information"></textarea>
+    <textarea class='form-control' name='description' rows='5' placeholder="Stock activity information"></textarea>
   </div>
   {% csrf_token %}
   <div class='d-flex justify-content-between'>
     <button class="btn btn-primary" type="submit">Continue</button>
-    <a class="btn btn-link" href="{% url 'product.index' %}">All products</a>
+    <a class="btn btn-link" href="{% url 'activity.index' %}">All activities</a>
   </div>
 </form>
 {% endblock %}
