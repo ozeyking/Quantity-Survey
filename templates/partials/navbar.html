@@ -26,14 +26,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'home' %}">Features</a>
+            <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'home' %}#features">Product / Service</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'about' %}">About Us</a>
           </li>
-          {% comment %} <li class="nav-item">
-            <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Pricing</a>
-          </li> {% endcomment %}
           <li class="nav-item">
             <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'contact' %}">Contact Us</a>
           </li>
