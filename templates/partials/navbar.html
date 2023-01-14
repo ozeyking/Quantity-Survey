@@ -29,11 +29,11 @@
             <a class="nav-link {% if '/product' in request.path %} active {% endif %}" href="{% url 'home' %}">Features</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'home' %}">About Us</a>
+            <a class="nav-link {% if '/partner' in request.path %} active {% endif %}" href="{% url 'about' %}">About Us</a>
           </li>
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link {% if '/service' in request.path %} active {% endif %}" href="{% url 'home' %}">Pricing</a>
-          </li>
+          </li> {% endcomment %}
           <li class="nav-item">
             <a class="nav-link {% if 'qna' in request.path %} active {% endif %}" href="{% url 'home' %}">Contact Us</a>
           </li>

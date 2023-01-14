@@ -15,6 +15,8 @@ import pandas as pd
 @require_http_methods(["GET"])
 def home(request):
     return render(request, "home.html")
+def about(request):
+    return render(request, "about.html")
 
 
 @require_http_methods(["GET"])
