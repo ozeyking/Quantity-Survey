@@ -15,8 +15,12 @@ import pandas as pd
 @require_http_methods(["GET"])
 def home(request):
     return render(request, "home.html")
+
+
 def about(request):
     return render(request, "about.html")
+
+
 def contact(request):
     return render(request, "contact.html")
 
@@ -89,6 +93,7 @@ def dashboard(request):
     supplier_count = Supplier.objects.count()
     employee_count = Employee.objects.count()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+    suppliers = Supplier.objects.all()
 
     return render(
         request,
@@ -99,6 +104,7 @@ def dashboard(request):
             "product_count": product_count,
             "employee_count": employee_count,
             "site_count": site_count,
+            "suppliers": suppliers,
         },
     )
 
