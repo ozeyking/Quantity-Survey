@@ -21,17 +21,17 @@
         </div>
         <div class="carousel-item">
           <img src="{% static 'images/notebook.jpg' %}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block text-dark text-start py-5 my-5">
+           {% comment %} <div class="carousel-caption d-none d-md-block text-dark text-start py-5 my-5">
             <h2>Second slide label</h2>
             <p class='lead'>Some representative placeholder content for the second slide.</p>
             <a href='/about' class='btn btn-primary'>Get Started</a>
-          </div>
-        </div>
+          </div> {% endcomment %}
+        </div> 
         <div class="carousel-item">
           <img src="{% static 'images/illustration.jpg' %}" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block text-dark text-start py-5 my-5">
-            <h2>Third slide label</h2>
-            <p class='lead'>Some representative placeholder content for the third slide.</p>
+            {% comment %} <h2>Third slide label</h2>
+            <p class='lead'>Some representative placeholder content for the third slide.</p> {% endcomment %}
             <a href='/signin' class='btn btn-primary'>Login</a>
             <a href='/signup' class='btn btn-secondary'>Register</a>
           </div>
@@ -47,7 +47,7 @@
       </button>
     </div>
   </div>
-  <div class='col-12 py-5 text-light bg-danger text-center fs-3'>
+  <div class='col-12 py-2 text-light bg-danger text-center fs-3'>
     The software to facilitate your quantity survey activities.<br/>Get started today.
   </div>
   <div class='col-md-6 d-flex align-items-center'>
@@ -64,7 +64,7 @@
       <p class='lead'>Use manual take off or link with DimensionX to automatically bring your measurements into your QSPlus project from your PDF, AutoCad or Revit DWFx drawing.</p>
     </div>
   </div>
-  <div class='col-12 py-5 bg-danger text-center fs-3'>
+  <div class='col-12 py-3 bg-danger text-center fs-3'>
     <div class='row text-light'>
       <div class='col-md-3' id='features'>
         <div class='card-body text-center m-2'>
