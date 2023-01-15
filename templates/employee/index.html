@@ -30,9 +30,10 @@
       <td>{{employee.position}}</td>
       <td>{{employee.phone}}, {{employee.email}}</td>
       <td>
-        <a href='#' class='btn btn-sm btn-success'>Details</a>
+        {% if employee.site_id == site.id %}
         <a href="{% url 'supervisor:employee.edit' id=employee.id %}" class="btn btn-sm btn-info">Edit</a>
         <a href="{% url 'supervisor:employee.delete' id=employee.id %}" class="btn btn-sm btn-warning">Delete</a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}

@@ -68,5 +68,13 @@
   </div>
 </div>
 {% else %} 
-<div class='alert bg-info'>Welcome come back <strong>{{ user.first_name }} {{ user.last_name }}, {{ user.email }}</strong></div>
+<div class='alert bg-info'>
+  Welcome come back <strong>{{ user.first_name }} {{ user.last_name }}, {{ user.email }}</strong>
+</div>
+<a 
+  href='{% url "supplier:supplier.show" id=supplier.id %}'
+  class='btn btn-outline-secondary rounded-pill'
+>
+  View Supplier Products &rarr;
+</a>
 {% endif %} {% endblock %}

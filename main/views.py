@@ -93,7 +93,7 @@ def dashboard(request):
     supplier_count = Supplier.objects.count()
     employee_count = Employee.objects.count()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-    suppliers = Supplier.objects.all()
+    supplier = Supplier.objects.filter(owner_id=request.user.id).first()
 
     return render(
         request,
@@ -104,7 +104,7 @@ def dashboard(request):
             "product_count": product_count,
             "employee_count": employee_count,
             "site_count": site_count,
-            "suppliers": suppliers,
+            "supplier": supplier,
         },
     )
 
@@ -193,14 +193,15 @@ def product_create(request):
 
             try:
                 for index, row in df.iterrows():
-                    product = Product(
-                        name=row["name"],
-                        price=row["price"],
-                        quality=row["quality"],
-                        description=row["description"],
-                        user_id=request.user.id,
-                    )
-                    product.save()
+                    if not Product.objects.filter(name=row["name"]).exists():
+                        product = Product(
+                            name=row["name"],
+                            price=row["price"],
+                            quality=row["quality"],
+                            description=row["description"],
+                            user_id=request.user.id,
+                        )
+                        product.save()
                 messages.info(request, "Product saved")
             except:
                 messages.info(
@@ -351,5 +352,34 @@ def activity_show(request, id):
 
 @login_required(login_url="signin")
 def analysis(request):
-    products = Product.objects.all()
-    return render(request, "analysis.html", {"products": products})
+    if request.method == "GET":
+        products = Product.objects.all()
+        return render(request, "analysis.html", {"products": products})
+
+    elif request.method == "POST":
+        cheap_products = []
+        quality_products = []
+        ids = request.POST["products"]
+        products = Product.objects.filter(id__in=ids.split(",")).all()
+
+        # Supplier Product with highest quality
+        for product in products:
+            cheap_products.append(
+                SupplierProduct.objects.order_by("price")
+                .filter(name=product.name)
+                .first()
+            )
+
+        # Supplier Product with lowest price
+        for product in products:
+            quality_products.append(
+                SupplierProduct.objects.order_by("quality")
+                .filter(name=product.name)
+                .first()
+            )
+
+        return render(
+            request,
+            "analysis-report.html",
+            {"cheap_products": cheap_products, "quality_products": quality_products},
+        )

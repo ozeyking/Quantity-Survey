@@ -27,15 +27,23 @@
         <td>{{product.name}}</td>
         <td>{{product.description|truncatechars:20}}</td>
         <td>
-            <button id='{{ product.id }}' class='btn btn-outline-secondary btn-sm rounded-pill' onclick='add({{ product.id }})'>Add</button>
+            <button 
+                id='{{ product.id }}'
+                class='btn btn-outline-secondary btn-sm rounded-pill'
+                onclick='add({{ product.id }})'
+            >
+                Add
+            </button>
         </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<center class='my-5'>
-    <button class='btn btn-primary rounded-pill' onclick='generateList()'>Generate Price List</button>
-</center>
+<form class='text-center my-5' action='#' method='post'>
+    {% csrf_token %}
+    <input type='hidden' name='products' value="" id='products' />
+    <button class='btn btn-primary rounded-pill' type='submit'>Generate Price List</button>
+</form>
 {% endblock %}
 {% block scripts %}
 <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}" />
@@ -47,9 +55,7 @@
             document.getElementById(id).innerText = 'Remove'
         else document.getElementById(id).innerText = 'Add'
         choosenProducts.push(id)
-    }
-    function generateList() {
-        console.log(choosenProducts)
+        document.getElementById('products').value = choosenProducts.join(',')
     }
     $(document).ready( function () {
         $('#table').DataTable();
