@@ -1,49 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jan 14, 2023 at 03:23 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `qs`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_user`
---
-
-CREATE TABLE `auth_user` (
-  `id` int(11) NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `auth_user`
---
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
 (1, 'pbkdf2_sha256$390000$sRnwOX1A4IpVSzQv0ymfaw$1DNEQPh9CcEqTfHogS2LZaR5U5Hw9cQyaVG6LWoWPIU=', '2023-01-14 07:25:34.002855', 0, 'kanombe_supervisor', '', '', 'kanombe@email.com', 1, 1, '2023-01-01 13:42:51.000000'),
@@ -63,29 +18,3 @@ INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `userna
 (15, 'pbkdf2_sha256$390000$esWZoQ7i565UsChARbsqdf$4wIQXVEkVW7TAswrjzADWM2iUwm30n/hW6H/oDahjqE=', '2023-01-14 13:18:38.000000', 0, 'tolirwa_representative', '', '', 'tolirwa@email.com', 0, 1, '2023-01-14 13:18:38.000000'),
 (16, 'pbkdf2_sha256$390000$S2kheeHNqyhDCsm712tNpU$Z/aKi+tF1ZGuL6WAPx7MGwaarOWwxeIV2o06XGTu4HI=', '2023-01-14 13:19:06.000000', 0, 'mastersteel_representative', '', '', 'mastersteel@email.com', 0, 1, '2023-01-14 13:19:05.000000'),
 (17, 'pbkdf2_sha256$390000$lDPlCLZzMPijrNoQqXtL6N$MFOXRLy1RWuJ8AsRNiWuYZywJPuG7ml0BO75LIyA07M=', '2023-01-14 13:19:29.000000', 0, 'twyford_representative', '', '', 'twyford@email.com', 0, 1, '2023-01-14 13:19:29.000000');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `auth_user`
---
-ALTER TABLE `auth_user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `auth_user`
---
-ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
