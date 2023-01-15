@@ -13,7 +13,7 @@ import pandas as pd
 @login_required(login_url="signin")
 def supplier_index(request):
     suppliers = Supplier.objects.order_by("-id")
-    paginator = Paginator(suppliers, 10)
+    paginator = Paginator(suppliers, 20)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
 

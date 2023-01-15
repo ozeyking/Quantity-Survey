@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2023 at 04:57 PM
+-- Generation Time: Jan 15, 2023 at 05:09 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -180,7 +180,7 @@ CREATE TABLE `auth_user` (
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
 (1, 'pbkdf2_sha256$390000$sRnwOX1A4IpVSzQv0ymfaw$1DNEQPh9CcEqTfHogS2LZaR5U5Hw9cQyaVG6LWoWPIU=', '2023-01-15 15:16:46.487469', 0, 'kanombe_supervisor', '', '', 'kanombe@email.com', 1, 1, '2023-01-01 13:42:51.000000'),
 (2, 'pbkdf2_sha256$390000$dlhlgOzp8GOfWoenbcavWH$5i/D7+cidVREpnI/jzNcW4ZzR7cAubLdD+NZt4M9J5E=', '2023-01-14 08:19:31.398922', 0, 'cimerwa_representative', '', '', 'cimerwa@email.com', 1, 1, '2023-01-01 13:43:12.000000'),
-(3, 'pbkdf2_sha256$390000$D9GPP1dBDxXeBy968kVgmb$ljFnf9IyB1D/rkWaP1pNdyQXByk3SxLCCBvTikjslSs=', '2023-01-15 15:11:55.386820', 1, 'admin', '', '', 'admin@email.com', 1, 1, '2023-01-01 13:43:36.731956'),
+(3, 'pbkdf2_sha256$390000$D9GPP1dBDxXeBy968kVgmb$ljFnf9IyB1D/rkWaP1pNdyQXByk3SxLCCBvTikjslSs=', '2023-01-15 15:59:50.139899', 1, 'admin', '', '', 'admin@email.com', 1, 1, '2023-01-01 13:43:36.731956'),
 (4, 'pbkdf2_sha256$390000$6l4IhThoBoXcjjbre9waxt$1H6r8akbS0maLW5bS3f+xJWceTWyyeaGEB0wj1z1p4w=', '2023-01-15 15:17:26.698359', 0, 'amaco_representative', '', '', 'amaco@email.com', 0, 1, '2023-01-14 13:13:27.000000'),
 (5, 'pbkdf2_sha256$390000$eR3JqR70m23rXmahn6o3nv$dSdu5JTNvD/HFGHZDHg2uT7miUQcsoQVubLFovYLTVo=', '2023-01-15 15:21:43.042138', 0, 'ameki_representative', '', '', 'ameki@email.com', 0, 1, '2023-01-14 13:13:56.000000'),
 (6, 'pbkdf2_sha256$390000$bwzfmj5EdbIEl78dNdSgtz$YyQFYWBOujawGFxS9273I5bNMNtq+DAvx1+1K1XXW+c=', '2023-01-15 15:25:57.656306', 0, 'dura_paint_dealer', 'MR', 'Dura Paint', 'dura@email.com', 0, 1, '2023-01-14 13:14:19.000000'),
@@ -351,9 +351,9 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('1ivog1vwyp5vy62frvuj6cukabuvvypx', '.eJxVjMsOwiAQRf-FtSEDDLTj0r3fQHgMUjU0Ke3K-O_apAvd3nPOfQkftrX6rfPipyzOQg3i9DvGkB7cdpLvod1mmea2LlOUuyIP2uV1zvy8HO7fQQ29futRWygGQ8qkR9SEJcbBGtZEijlpk9AahwYYHGYbgYBcIUCjctKI4v0B6hI26Q:1pH5Kq:5p0VDlwXRtC2_E5PoM6QLsmssrnUzLZXAF_YjdA3p-Q', '2023-01-29 15:54:16.570564'),
 ('cxie4tqp4ygxxxk58lrl40674qibcbub', '.eJxVjEEOwiAQRe_C2hDqwAAu3XsGMgwgVUOT0q6Md7dNutDte-__twi0LjWsPc9hTOIiQJx-WSR-5raL9KB2nyRPbZnHKPdEHrbL25Ty63q0fweVet3WzBFIK2SFntiXwXOGQWdVrFMJUHHmlJAsGGfPiE7ZjbIBA1pDseLzBe72N3g:1pGiLv:frEyYl_lqSzjmXmwOacRMVzM5CuwhabpgUokpS--6Co', '2023-01-28 15:21:51.746607'),
-('u4jncnb17pb3b5evjhcznt1qsha83xfc', '.eJxVjEEOwiAQRe_C2hDqwAAu3XsGMgwgVUOT0q6Md7dNutDte-__twi0LjWsPc9hTOIiQJx-WSR-5raL9KB2nyRPbZnHKPdEHrbL25Ty63q0fweVet3WzBFIK2SFntiXwXOGQWdVrFMJUHHmlJAsGGfPiE7ZjbIBA1pDseLzBe72N3g:1pGjW5:AzDb4wyRvkq9QKO5LQ_P8uDXbxWNwMMX99hUsD0IheI', '2023-01-28 16:36:25.892925');
+('u4jncnb17pb3b5evjhcznt1qsha83xfc', '.eJxVjEEOwiAQRe_C2hDqwAAu3XsGMgwgVUOT0q6Md7dNutDte-__twi0LjWsPc9hTOIiQJx-WSR-5raL9KB2nyRPbZnHKPdEHrbL25Ty63q0fweVet3WzBFIK2SFntiXwXOGQWdVrFMJUHHmlJAsGGfPiE7ZjbIBA1pDseLzBe72N3g:1pGjW5:AzDb4wyRvkq9QKO5LQ_P8uDXbxWNwMMX99hUsD0IheI', '2023-01-28 16:36:25.892925'),
+('xn1vjgc4gf4g4exwm7jxn4dk64evnu5j', '.eJxVjEEOwiAQRe_C2hDqwAAu3XsGMgwgVUOT0q6Md7dNutDte-__twi0LjWsPc9hTOIiQJx-WSR-5raL9KB2nyRPbZnHKPdEHrbL25Ty63q0fweVet3WzBFIK2SFntiXwXOGQWdVrFMJUHHmlJAsGGfPiE7ZjbIBA1pDseLzBe72N3g:1pH5QE:zEn9JDDy55d7SThNbt3mZOK7xD_1uLbyEbzOUolfzAY', '2023-01-29 15:59:50.143077');
 
 -- --------------------------------------------------------
 
@@ -492,7 +492,7 @@ CREATE TABLE `supplier_supplier` (
 --
 
 INSERT INTO `supplier_supplier` (`id`, `name`, `description`, `image`, `owner_id`, `created_at`, `user_id`) VALUES
-(1, 'cimerwa ltd', 'call 39059045 for more information', 'supplier/cimerwa_ZA1NpdU.jpeg', 2, '2023-01-01 15:47:19.398464', 3),
+(1, 'cimerwa ltd', 'call 39059045 for more information', 'supplier/cimerwa_88w4MQm.jpeg', 2, '2023-01-01 15:47:19.398464', 3),
 (2, 'Amaco Paints', 'great paint', 'supplier/amaco_paint.png', 4, '2023-01-14 15:25:56.502838', 3),
 (3, 'Ameki Color', 'paints', 'supplier/ameki_color.png', 5, '2023-01-14 15:26:32.945544', 3),
 (4, 'Dura Paint', 'more paint', 'supplier/dura_paint.jpeg', 6, '2023-01-14 15:27:15.064726', 3),
