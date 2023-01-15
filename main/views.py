@@ -93,7 +93,7 @@ def dashboard(request):
     supplier_count = Supplier.objects.count()
     employee_count = Employee.objects.count()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-    suppliers = Supplier.objects.all()
+    supplier = Supplier.objects.filter(owner_id=request.user.id).first()
 
     return render(
         request,
@@ -104,7 +104,7 @@ def dashboard(request):
             "product_count": product_count,
             "employee_count": employee_count,
             "site_count": site_count,
-            "suppliers": suppliers,
+            "supplier": supplier,
         },
     )
 
