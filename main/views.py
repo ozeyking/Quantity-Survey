@@ -351,4 +351,5 @@ def activity_show(request, id):
 
 @login_required(login_url="signin")
 def analysis(request):
-    return render(request, "analysis.html")
+    products = Product.objects.all()
+    return render(request, "analysis.html", {"products": products})
