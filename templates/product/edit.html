@@ -36,7 +36,7 @@
     {% if suppliers.count %}
     <div class="col-md-6 mb-2">
       <label for="supplier" class="form-label">Supplier</label>
-      <select class='form-control' name='quality'>
+      <select class='form-control' name='supplier'>
         <option value='{{ product.supplier_id }}'>{{ product.supplier.name }}</option>
         {% for supplier in suppliers %}
         <option value='{{ supplier.id }}'>{{ supplier.name }}</option>
