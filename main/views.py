@@ -193,14 +193,15 @@ def product_create(request):
 
             try:
                 for index, row in df.iterrows():
-                    product = Product(
-                        name=row["name"],
-                        price=row["price"],
-                        quality=row["quality"],
-                        description=row["description"],
-                        user_id=request.user.id,
-                    )
-                    product.save()
+                    if not Product.objects.filter(name=row["name"]).exists():
+                        product = Product(
+                            name=row["name"],
+                            price=row["price"],
+                            quality=row["quality"],
+                            description=row["description"],
+                            user_id=request.user.id,
+                        )
+                        product.save()
                 messages.info(request, "Product saved")
             except:
                 messages.info(
