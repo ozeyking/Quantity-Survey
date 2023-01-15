@@ -357,10 +357,29 @@ def analysis(request):
         return render(request, "analysis.html", {"products": products})
 
     elif request.method == "POST":
+        cheap_products = []
+        quality_products = []
         ids = request.POST["products"]
         products = Product.objects.filter(id__in=ids.split(",")).all()
 
         # Supplier Product with highest quality
-        # Supplier Product with lowest price
+        for product in products:
+            cheap_products.append(
+                SupplierProduct.objects.order_by("price")
+                .filter(name=product.name)
+                .first()
+            )
 
-        return HttpResponse("you are here")
+        # Supplier Product with lowest price
+        for product in products:
+            quality_products.append(
+                SupplierProduct.objects.order_by("quality")
+                .filter(name=product.name)
+                .first()
+            )
+
+        return render(
+            request,
+            "analysis-report.html",
+            {"cheap_products": cheap_products, "quality_products": quality_products},
+        )
