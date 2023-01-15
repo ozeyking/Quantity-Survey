@@ -3,30 +3,39 @@
 {% load static %}
 {% block title %} Analysis - Quantity Survey {% endblock %}
 {% block content %}
-<div class="row">
-    <table class="table bg-white">
-        <thead>
-            <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-            <td>{% if product.image %}<img src='/media/{{product.image}}' width='50'/>{% endif %}</td>
-            <td>{{product.name}}</td>
-            <td>{{product.description|truncatechars:20}}</td>
-            <td>
-                <button id='{{ product.id }}' class='btn btn-outline-secondary btn-sm rounded-pill' onclick='add({{ product.id }})'>Add</button>
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<h4>Analysis</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Analysis</li>
+  </ol>
+</nav>
+<table class="table bg-white">
+    <thead>
+        <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+        <td>{% if product.image %}<img src='/media/{{product.image}}' width='50'/>{% endif %}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.description|truncatechars:20}}</td>
+        <td>
+            <button id='{{ product.id }}' class='btn btn-outline-secondary btn-sm rounded-pill' onclick='add({{ product.id }})'>Add</button>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<center>
+    <button class='btn btn-primary rounded-pill'>Generate Price List</button>
+</center>
 {% endblock %}
 {% block scripts %}
 <script>
