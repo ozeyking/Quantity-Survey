@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Supplier - Quantity Survey {% endblock %}
+{% block content %}
+<div class='container py-4'>
+  <h4>Supplier</h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'supplier:supplier.index' %}">Supplier</a></li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class='col-md-4'>
+        <div class="card card-body text-center shadow-sm">
+            {% if supplier.image %}
+            <img
+                class="img-fluid w-50 mx-auto"
+                src="/media/{{ supplier.image }}"
+                alt="{{ supplier.name }}"
+            />
+            {% else %}
+            <img
+                class="img-fluid w-50 mx-auto"
+                src="/static/images/person.png"
+                alt="{{ supplier.name }}"
+            />
+            {% endif %}
+            <h5 class="text-truncate fw-bold my-1">{{ supplier.name }}</h5>
+        </div>
+    </div>
+    <div class='col-md-8'>
+      {% include 'partials/messages.html' %}
+      <div class='card card-body shadow-sm'>
+          <h5>Short description</h5>
+          <div>{{ supplier.description|safe }}</div>
+      </div>
+    </div>
+    {% if products.count %}
+    <div class='col-12 text-center my-3'><hr/><h2>Products</h2></div>
+    {% for product in products %}
+    <div class='col-md-3'>
+      <div class='card mb-3'>
+        <div class='card-header text-capitalize'>{{ product.name }}</div>
+        <div class='card-body'>
+          {% if product.image %}
+          <img src="/media/{{ product.image }}" class='card-img-top' alt='{{ product.name }}' />
+          {% elif product.image == '' %}
+          <img src="/static/images/placeholder.png" class='card-img-top' alt='{{ product.name }}' />
+          {% endif %}
+          {{ product.description|safe }}
+        </div>
+        <div class='card-footer'>{{ product.price }} RWF</div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector('#editor'))
+</script>
+{% endblock %}

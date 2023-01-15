@@ -76,8 +76,14 @@ def supplier_delete(request, id):
     return redirect("supplier:supplier.index")
 
 
+@login_required(login_url="signin")
 def supplier_show(request, id):
-    return HttpResponse("show supplier")
+    supplier = get_object_or_404(Supplier, pk=id)
+    products = SupplierProduct.objects.filter(supplier_id=id).all()
+
+    return render(
+        request, "supplier/show.html", {"supplier": supplier, "products": products}
+    )
 
 
 @login_required(login_url="signin")
