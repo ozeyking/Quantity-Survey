@@ -86,12 +86,15 @@ def site_delete(request, id):
 # employee
 @login_required(login_url="signin")
 def employee_index(request):
+    site = Site.objects.filter(supervisor_id=request.user.id).first()
     employees = Employee.objects.order_by("-id")
     paginator = Paginator(employees, 10)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
 
-    return render(request, "employee/index.html", {"page_object": page_object})
+    return render(
+        request, "employee/index.html", {"page_object": page_object, "site": site}
+    )
 
 
 @login_required(login_url="signin")
