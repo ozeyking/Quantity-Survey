@@ -14,7 +14,7 @@
   <div class='row'>
     <div class="col-md-4 mb-2">
       <label for="name" class="form-label">Full names *</label>
-      <input type="text" class="form-control" name='name' placeholder="full name" required>
+      <input type="text" class="form-control" name='name' placeholder="full name">
     </div>
     <div class="col-md-4 mb-2">
       <label for="phone" class="form-label">Phone number</label>
@@ -26,16 +26,20 @@
     </div>
     <div class="col-md-4 mb-2">
       <label for="position" class="form-label">Position</label>
-      <input type="text" class="form-control" name='position' placeholder="painter,plumber,builder" required>
+      <input type="text" class="form-control" name='position' placeholder="painter,plumber,builder">
     </div>
     <div class="col-md-4 mb-2">
       <label for="site" class="form-label">Site</label>
-      <select class='form-control' name='site' required>
+      <select class='form-control' name='site'>
         <option value=''> - select site - </option>
         {% for site in sites %}
         <option value='{{ site.id }}'>{{ site.name }}</option>
         {% endfor %}
       </select>
+    </div>
+    <div class="col-md-6 mb-2">
+      <label for="excel" class="form-label">Upload products from excel</label>
+      <input type="file" class="form-control" name='excel' accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' />
     </div>
   </div>
   {% csrf_token %}

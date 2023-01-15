@@ -115,7 +115,7 @@ def supplier_product_create(request):
                 messages.info(request, "Product saved")
             except:
                 messages.info(
-                    request, "Some rows in the excel files contained invalid data"
+                    request, "Some rows in the excel file contain invalid data"
                 )
                 pass
         else:

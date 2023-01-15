@@ -101,22 +101,42 @@ def employee_create(request):
         return render(request, "employee/create.html", {"sites": sites})
 
     elif request.method == "POST":
-        name = request.POST["name"]
-        phone = request.POST["phone"]
-        email = request.POST["email"]
-        site = request.POST["site"]
-        position = request.POST["position"]
-        employee = Employee(
-            names=name,
-            phone=phone,
-            email=email,
-            position=position,
-            site_id=site,
-            user_id=request.user.id,
-        )
+        if request.FILES.get("excel") != None:
+            df = pd.read_excel(request.FILES.get("excel"))
 
-        employee.save()
-        messages.info(request, "New employee")
+            try:
+                for index, row in df.iterrows():
+                    employee = Employee(
+                        names=row["names"],
+                        phone=row["phone"],
+                        email=row["email"],
+                        site_id=Site.objects.filter(name=row["site"]).first().id,
+                        position=row["position"],
+                        user_id=request.user.id,
+                    )
+                    employee.save()
+                messages.info(request, "Employee saved")
+            except:
+                messages.info(
+                    request, "Some rows in the excel file contain invalid data"
+                )
+        else:
+            name = request.POST["name"]
+            phone = request.POST["phone"]
+            email = request.POST["email"]
+            site = request.POST["site"]
+            position = request.POST["position"]
+            employee = Employee(
+                names=name,
+                phone=phone,
+                email=email,
+                position=position,
+                site_id=site,
+                user_id=request.user.id,
+            )
+
+            employee.save()
+            messages.info(request, "New employee")
         return redirect("supervisor:employee.index")
 
 

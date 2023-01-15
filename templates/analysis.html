@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active" aria-current="page">Analysis</li>
   </ol>
 </nav>
-<table class="table bg-white">
+<table class="table bg-white" id='table'>
     <thead>
         <tr>
         <th scope="col">Image</th>
@@ -34,15 +34,27 @@
     </tbody>
 </table>
 <center>
-    <button class='btn btn-primary rounded-pill'>Generate Price List</button>
+    <button class='btn btn-primary rounded-pill' onclick='generateList()'>Generate Price List</button>
 </center>
 {% endblock %}
 {% block scripts %}
+<link rel="stylesheet" href="{% static 'css/datatables.css' %}" />
+<script scr='{% static 'js/jquery.js' %}'></script>
+<script scr='{% static 'js/jquery.dataTables.js' %}'></script>
+<script scr='{% static 'js/dataTables.bootstrap5.js' %}'></script>
 <script>
+    let choosenProducts = []
     function add(id = 0) {
         if (document.getElementById(id).innerText == 'Add')
             document.getElementById(id).innerText = 'Remove'
         else document.getElementById(id).innerText = 'Add'
+        choosenProducts.push(id)
     }
+    function generateList() {
+        console.log(choosenProducts)
+    }
+    $(document).ready( function () {
+        $('#table').DataTable();
+    } );
 </script>
 {% endblock %}
