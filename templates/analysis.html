@@ -33,15 +33,13 @@
         {% endfor %}
     </tbody>
 </table>
-<center>
+<center class='my-5'>
     <button class='btn btn-primary rounded-pill' onclick='generateList()'>Generate Price List</button>
 </center>
 {% endblock %}
 {% block scripts %}
-<link rel="stylesheet" href="{% static 'css/datatables.css' %}" />
-<script scr='{% static 'js/jquery.js' %}'></script>
-<script scr='{% static 'js/jquery.dataTables.js' %}'></script>
-<script scr='{% static 'js/dataTables.bootstrap5.js' %}'></script>
+<link rel="stylesheet" href="{% static 'css/datatables.min.css' %}" />
+<script src="{% static 'js/datatables.min.js' %}"></script>
 <script>
     let choosenProducts = []
     function add(id = 0) {
