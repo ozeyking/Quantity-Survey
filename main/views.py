@@ -352,5 +352,15 @@ def activity_show(request, id):
 
 @login_required(login_url="signin")
 def analysis(request):
-    products = Product.objects.all()
-    return render(request, "analysis.html", {"products": products})
+    if request.method == "GET":
+        products = Product.objects.all()
+        return render(request, "analysis.html", {"products": products})
+
+    elif request.method == "POST":
+        ids = request.POST["products"]
+        products = Product.objects.filter(id__in=ids.split(",")).all()
+
+        # Supplier Product with highest quality
+        # Supplier Product with lowest price
+
+        return HttpResponse("you are here")
