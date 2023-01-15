@@ -338,10 +338,17 @@ def activity_edit(request, id):
         return redirect("activity.index")
 
 
+@login_required(login_url="signin")
 def activity_delete(request, id):
     StockActivity.objects.filter(pk=id).delete()
     return redirect("activity.index")
 
 
+@login_required(login_url="signin")
 def activity_show(request, id):
     return HttpResponse("show activity")
+
+
+@login_required(login_url="signin")
+def analysis(request):
+    return render(request, "analysis.html")
