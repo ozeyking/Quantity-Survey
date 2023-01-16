@@ -357,6 +357,10 @@ def analysis(request):
         return render(request, "analysis.html", {"products": products})
 
     elif request.method == "POST":
+        cheap_labels = []
+        cheap_prices = []
+        quality_labels = []
+        quality_prices = []
         cheap_products = []
         quality_products = []
         ids = request.POST["products"]
@@ -369,6 +373,8 @@ def analysis(request):
                 .filter(name=product.name)
                 .first()
             )
+            cheap_labels.append(cheap_products[-1].name)
+            cheap_prices.append(cheap_products[-1].price)
 
         # Supplier Product with lowest price
         for product in products:
@@ -377,9 +383,18 @@ def analysis(request):
                 .filter(name=product.name)
                 .first()
             )
+            quality_labels.append(quality_products[-1].name)
+            quality_prices.append(quality_products[-1].price)
 
         return render(
             request,
             "analysis-report.html",
-            {"cheap_products": cheap_products, "quality_products": quality_products},
+            {
+                "cheap_products": cheap_products,
+                "quality_products": quality_products,
+                "cheap_prices": cheap_prices,
+                "cheap_labels": cheap_labels,
+                "quality_prices": quality_prices,
+                "quality_labels": quality_labels,
+            },
         )

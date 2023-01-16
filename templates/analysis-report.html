@@ -49,6 +49,7 @@
         </table>
         <center>
             <button class='btn btn-success rounded-pill' onclick="printExcel('quality-table')">Print Excel</button>
+            <div class='w-50 h-50 mt-3'><canvas id="quality" width="200" height="200"></canvas></div>
         </center>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -80,15 +81,21 @@
         </table>
         <center>
             <button class='btn btn-success rounded-pill' onclick="printExcel('cheap-table')">Print Excel</button>
+            <div class='w-50 h-50 mt-3'><canvas id="cheap" width="200" height="200"></canvas></div>
         </center>
     </div>
 </div>
 {% endblock %}
 {% block scripts %}
+<script src="{% static 'vendor/chart_js/chart.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}" />
 <script src="{% static 'js/datatables.min.js' %}"></script>
 <script src="{% static 'js/tableToExcel.js' %}"></script>
 <script>
+    let cheapLabels = {{ cheap_labels|safe }}
+    let cheapPrices = {{ cheap_prices|safe }}
+    let qualityLabels = {{ quality_labels|safe }}
+    let qualityPrices = {{ quality_prices|safe }}
     $(document).ready(function () {
         $('#cheap-table').DataTable();
         $('#quality-table').DataTable();
@@ -96,5 +103,75 @@
     function printExcel(name='') {
         TableToExcel.convert(document.getElementById(name))
     }
+    const cheapProduction = document.getElementById('cheap').getContext('2d');
+    const qualityProduction = document.getElementById('quality').getContext('2d');
+    const cheapProductionChart = new Chart(cheapProduction, {
+        type: 'pie',
+        data: {
+            labels: cheapLabels,
+            datasets: [{
+                label: '# product / price',
+                data: cheapPrices,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });    
+    const qualityProductionChart = new Chart(qualityProduction, {
+        type: 'pie',
+        data: {
+            labels: qualityLabels,
+            datasets: [{
+                label: '# product / price',
+                data: qualityPrices,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 </script>
 {% endblock %}
