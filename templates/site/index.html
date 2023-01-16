@@ -32,7 +32,6 @@
       <td>{{site.description|truncatechars:20}}</td>
       <td>
         {% if site.user_id == user.id %}
-          <a href='#' class='btn btn-sm btn-success'>Details</a>
           <a href="{% url 'supervisor:site.edit' id=site.id %}" class="btn btn-sm btn-info">Edit</a>
           <a href="{% url 'supervisor:site.delete' id=site.id %}" class="btn btn-sm btn-warning">Delete</a>
         {% endif %}

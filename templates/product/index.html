@@ -40,11 +40,9 @@
       <td>{{product.quality}}</td>
       <td>
         {% if user.groups.first.name != 'supplier' and product.user_id == user.id %}
-          <a href='#' class='btn btn-sm btn-success'>Details</a>
           <a href="{% url 'product.edit' id=product.id %}" class="btn btn-sm btn-info">Edit</a>
           <a href="{% url 'product.delete' id=product.id %}" class="btn btn-sm btn-warning">Delete</a>
         {% endif %} {% if user.groups.first.name == 'supplier' and product.user_id == user.id %}
-          <a href='#' class='btn btn-sm btn-success'>Details</a>
           <a href="{% url 'supplier:product.edit' id=product.id %}" class="btn btn-sm btn-info">Edit</a>
           <a href="{% url 'supplier:product.delete' id=product.id %}" class="btn btn-sm btn-warning">Delete</a>
         {% endif %}
